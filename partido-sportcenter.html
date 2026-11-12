@@ -136,6 +136,9 @@ a{color:#fff}a:hover{color:#3DDC5A}
   function tick(){
     document.querySelectorAll('[data-cd-short]').forEach(function(el){var p=parts(el.getAttribute('data-cd-short'));
       el.textContent=p.ms===0?'¡Ya empezó!':p.d+' d '+pad(p.h)+' h '+pad(p.m)+' min';});
+    var SEG={'0':'abcdef','1':'bc','2':'abged','3':'abgcd','4':'fgbc','5':'afgcd','6':'afgedc','7':'abc','8':'abcdefg','9':'abfgcd'};
+    document.querySelectorAll('[data-seg]').forEach(function(el){var k=el.getAttribute('data-seg'),p=parts(el.getAttribute('data-iso'));var str=pad(p[k[0]]).slice(-2);
+      el.setAttribute('fill',SEG[str[+k[1]]].indexOf(k[2])>=0?'#151A10':'rgba(21,26,16,0.10)');});
     document.querySelectorAll('[data-cdp]').forEach(function(el){var p=parts(el.getAttribute('data-iso'));el.textContent=pad(p[el.getAttribute('data-cdp')]);});
     var iso=document.body.getAttribute('data-match');
     if(iso){var p=parts(iso);document.querySelectorAll('[data-cd-part]').forEach(function(el){var k=el.getAttribute('data-cd-part');el.textContent=k==='d'?String(p.d):pad(p[k]);});}
