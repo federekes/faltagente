@@ -65,6 +65,7 @@ aside[style*="position:sticky"]{top:100px!important}
 <div id="p-cont" hidden style="display:flex;flex-direction:column;gap:24px">
 <section style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px">
 <div id="p-estilo" style="background:#0A0A0A;border-bottom:3px solid #3DDC5A;padding:10px 20px;font-family:Anton,sans-serif;font-size:28px;line-height:1;letter-spacing:3px"></div>
+<div id="p-aprob" hidden style="font-weight:700;font-size:16px;letter-spacing:2px;color:#0A0A0A;background:#7CC4FF;padding:4px 12px">REQUIERE APROBACIÓN DEL ORGANIZADOR</div>
 <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.5em;color:#B8B8B8;vertical-align:middle">Cancha:</span> <span id="p-cancha"></span></h1>
 <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 16px;font-size:21px;color:#E6E6E6"><span><span style="color:#B8B8B8">Dirección:</span> <span id="p-dir"></span></span><a id="p-mapa" target="_blank" rel="noopener" style="min-height:40px;display:flex;align-items:center;font-weight:700;letter-spacing:1px;text-decoration-color:#3DDC5A;text-underline-offset:4px">VER UBICACIÓN ›</a></div>
 <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;max-width:620px;background:#0A0A0A;border:1px solid #2E3631">
@@ -73,6 +74,11 @@ aside[style*="position:sticky"]{top:100px!important}
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="letter-spacing:3px;font-size:15px;color:#B8B8B8;font-weight:700">EL PARTIDO EMPIEZA EN</span><div id="p-cd" style="transform:scale(1.5);transform-origin:top center;margin-bottom:26px"></div></div>
 <div style="font-size:21px;color:#D0D0D0">Organizado por <strong id="p-org" style="color:#7CC4FF"></strong></div>
 <div id="p-nota" style="width:100%;max-width:620px;background:#0A0A0A;border:1px solid #2E3631;padding:14px 18px;font-size:24px;font-style:italic"></div>
+</section>
+<section id="p-sol" hidden style="width:100%;max-width:1100px;align-self:center;border:2px solid #7CC4FF;background:#121614;padding:24px;display:flex;flex-direction:column;gap:12px">
+<h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:34px;letter-spacing:2px;color:#7CC4FF">SOLICITUDES PARA ENTRAR</h2>
+<span style="font-size:17px;color:#D0D0D0">Solo las ves vos, como organizador. Aceptá o rechazá a cada jugador.</span>
+<div id="p-sol-lista" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px"></div>
 </section>
 <section style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:24px;width:100%;max-width:1100px;align-self:center;display:flex;flex-direction:column;gap:14px">
 <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:40px;letter-spacing:2px;text-align:center">JUGADORES</h2>
@@ -154,10 +160,11 @@ const fila = (uid, j) => {
 const libre = '<button type="button" class="p-libre" style="display:flex;align-items:center;gap:12px;width:100%;min-height:112px;padding:8px 10px;border:2px dashed #5A6A60;background:none;color:#fff;font-family:inherit;text-align:left;cursor:pointer"><span style="width:72px;height:90px;flex:none;border:2px dashed #3DDC5A;display:flex;align-items:center;justify-content:center;color:#3DDC5A;font-family:Anton,sans-serif;font-size:34px">+</span><span style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:700;font-size:18px;letter-spacing:1px;color:#B8B8B8">LUGAR LIBRE</span><span class="p-libre-txt" style="font-family:Anton,sans-serif;font-size:20px;letter-spacing:1px;color:#3DDC5A">TOCÁ PARA ANOTARTE</span></span></button>';
 const pintar = async () => {
   const js = Object.entries(P.jugadores || {}).sort((a, b) => (a[1].t || 0) - (b[1].t || 0));
-  await Promise.all(js.filter(([u, j]) => !j.invitadoPor && !(u in perfiles)).map(async ([u]) => { try { const s = await getDoc(doc(db, 'jugadores', u)); perfiles[u] = s.exists() ? s.data() : {}; } catch (e) { perfiles[u] = {}; } }));
+  const pend = Object.entries(P.pendientes || {}).sort((a, b) => (a[1].t || 0) - (b[1].t || 0));
+  await Promise.all([...js, ...pend].filter(([u, j]) => !j.invitadoPor && !(u in perfiles)).map(async ([u]) => { try { const s = await getDoc(doc(db, 'jugadores', u)); perfiles[u] = s.exists() ? s.data() : {}; } catch (e) { perfiles[u] = {}; } }));
   const n = js.length, falta = Math.max(0, P.cupo - n), half = P.cupo / 2;
   document.title = `${P.cancha} · ${P.dia} ${P.fecha} · Falta Gente`;
-  $('p-estilo').textContent = P.estilo; $('p-cancha').textContent = P.cancha.toUpperCase(); $('p-dir').textContent = P.direccion;
+  $('p-estilo').textContent = P.estilo; $('p-aprob').hidden = !P.aprobacion; $('p-cancha').textContent = P.cancha.toUpperCase(); $('p-dir').textContent = P.direccion;
   $('p-mapa').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(P.cancha + ', ' + P.direccion);
   if (!$('p-cd').firstChild) { $('p-cd').innerHTML = lcd(esc(P.fechaISO)); tickLCD(); }
   $('p-dia').textContent = P.dia; $('p-fecha').textContent = P.fecha; $('p-hora').textContent = P.hora; $('p-org').textContent = P.orgAlias;
@@ -174,15 +181,22 @@ const pintar = async () => {
   if (!user) h = `<a href="registro.html?volver=${encodeURIComponent(location.pathname.split('/').pop() + location.search)}" style="min-height:96px;display:flex;align-items:center;justify-content:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:clamp(26px,3.5vw,40px);letter-spacing:2px;text-decoration:none">INGRESÁ PARA ANOTARTE</a>`;
   else if (yo && user.uid === P.orgUid) h = btn('SOS EL ORGANIZADOR', '#2E3631', '#D0D0D0', true);
   else if (yo) h = btn('ESTÁS ANOTADO · BAJARME', 'none', '#fff', false);
+  else if (P.aprobacion && P.pendientes && P.pendientes[user.uid]) h = btn('SOLICITUD ENVIADA · CANCELAR', 'none', '#fff', false) + '<p style="margin:10px 0 0;font-size:18px;color:#7CC4FF;font-weight:700">Esperando que el organizador te acepte. Cuando te acepte, vas a aparecer en la lista de jugadores.</p>';
   else if (falta === 0) h = btn('PARTIDO COMPLETO', '#2E3631', '#8A9A90', true);
+  else if (P.aprobacion) h = btn('PEDIR LUGAR · $' + P.precio, '#3DDC5A', '#0A0A0A', false) + '<p style="margin:10px 0 0;font-size:18px;color:#7CC4FF;font-weight:700">Este partido requiere aprobación del organizador.</p>';
   else h = btn('ANOTARME · $' + P.precio, '#3DDC5A', '#0A0A0A', false);
   const misInv = user ? js.filter(([u, j]) => j.invitadoPor === user.uid).length : 0;
   if (yo && falta > 0 && misInv < 3) h += `<form id="p-amigo" style="margin-top:14px;display:flex;flex-direction:column;gap:8px;text-align:left"><label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">ANOTAR A UN AMIGO<span style="display:flex;gap:8px;flex-wrap:wrap"><input id="p-amigo-nombre" maxlength="20" required placeholder="Nombre de tu amigo" style="flex:1 1 200px;min-height:56px;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-family:inherit;font-size:20px;padding:0 14px"><button type="submit" style="min-height:56px;padding:0 22px;background:none;border:2px solid #fff;color:#fff;font-family:Anton,sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer">AGREGAR</button></span></label><span style="font-size:16px;color:#B8B8B8">Aparece como invitado tuyo. Si tu amigo falta, el lugar lo pagás vos. Podés anotar hasta 3.</span></form>`;
+  const soyOrg = user && user.uid === P.orgUid;
+  $('p-sol').hidden = !(soyOrg && P.aprobacion && pend.length);
+  if (soyOrg && pend.length) $('p-sol-lista').innerHTML = pend.map(([u, j]) => fila(u, j).replace(/<\/div>$/, `<span style="display:flex;flex-direction:column;gap:6px;margin-left:auto"><button type="button" data-aprobar="${esc(u)}" style="min-height:44px;padding:0 14px;background:#3DDC5A;color:#0A0A0A;border:0;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer">ACEPTAR</button><button type="button" data-rechazar="${esc(u)}" style="min-height:44px;padding:0 14px;background:none;color:#fff;border:2px solid #8A8A8A;font-family:inherit;font-size:15px;cursor:pointer">Rechazar</button></span></div>`)).join('');
   $('p-accion').innerHTML = h;
   const b = $('p-btn'); if (b && !b.disabled) b.onclick = accion;
   const fa = $('p-amigo'); if (fa) fa.onsubmit = agregarAmigo;
   document.querySelectorAll('[data-quitar]').forEach((q) => q.onclick = () => quitar(q.dataset.quitar));
-  document.querySelectorAll('.p-libre-txt').forEach((t) => { t.textContent = yo ? (misInv < 3 ? '+ ANOTAR A UN AMIGO' : 'LUGAR DISPONIBLE') : 'TOCÁ PARA ANOTARTE'; });
+  document.querySelectorAll('[data-aprobar]').forEach((q) => q.onclick = () => resolver(q.dataset.aprobar, true));
+  document.querySelectorAll('[data-rechazar]').forEach((q) => q.onclick = () => resolver(q.dataset.rechazar, false));
+  document.querySelectorAll('.p-libre-txt').forEach((t) => { t.textContent = yo ? (misInv < 3 ? '+ ANOTAR A UN AMIGO' : 'LUGAR DISPONIBLE') : (P.aprobacion ? 'TOCÁ PARA PEDIR LUGAR' : 'TOCÁ PARA ANOTARTE'); });
   document.querySelectorAll('.p-libre').forEach((l) => l.onclick = () => {
     if (!user) { location.href = 'registro.html?volver=' + encodeURIComponent('partido.html?id=' + id); return; }
     if (!yo) { accion(); $('p-accion').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
@@ -196,10 +210,13 @@ const accion = async () => {
   const b = $('p-btn') || {}; b.disabled = true; $('p-msg').textContent = '';
   try {
     const yo = P.jugadores && P.jugadores[user.uid];
+    if (!yo && P.aprobacion && P.pendientes && P.pendientes[user.uid]) { await updateDoc(doc(db, 'partidos', id), { [`pendientes.${user.uid}`]: deleteField() }); $('p-msg').textContent = 'Cancelaste tu solicitud.'; return; }
     if (yo) { const upd = { [`jugadores.${user.uid}`]: deleteField() }; Object.entries(P.jugadores).forEach(([k, j]) => { if (j.invitadoPor === user.uid) upd[`jugadores.${k}`] = deleteField(); }); await updateDoc(doc(db, 'partidos', id), upd); }
     else { const s = await getDoc(doc(db, 'jugadores', user.uid)); const pr = s.exists() ? s.data() : null;
       if (!pr || !pr.alias) { $('p-msg').innerHTML = 'Antes de anotarte, <a href="registro.html?volver=' + encodeURIComponent('partido.html?id=' + id) + '" style="color:#3DDC5A">completá tu perfil</a>.'; b.disabled = false; return; }
-      perfiles[user.uid] = pr; await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: { alias: pr.alias, t: Date.now() } }); $('p-msg').textContent = '¡Listo, estás anotado!'; }
+      perfiles[user.uid] = pr;
+      if (P.aprobacion) { await updateDoc(doc(db, 'partidos', id), { [`pendientes.${user.uid}`]: { alias: pr.alias, t: Date.now() } }); $('p-msg').textContent = '¡Solicitud enviada! El organizador te tiene que aceptar.'; }
+      else { await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: { alias: pr.alias, t: Date.now() } }); $('p-msg').textContent = '¡Listo, estás anotado!'; } }
   } catch (e) { $('p-msg').textContent = 'No se pudo: ' + (e.code === 'permission-denied' ? 'el partido ya está completo o no tenés permiso.' : e.message); b.disabled = false; }
 };
 const agregarAmigo = async (ev) => {
@@ -207,8 +224,17 @@ const agregarAmigo = async (ev) => {
   const libres = [1, 2, 3].map((n) => user.uid + '_inv' + n).filter((k) => !(P.jugadores && P.jugadores[k]));
   if (!libres.length) { $('p-msg').textContent = 'Ya anotaste 3 amigos.'; return; }
   const yoAlias = (perfiles[user.uid] && perfiles[user.uid].alias) || (P.jugadores[user.uid] && P.jugadores[user.uid].alias) || '';
-  try { await updateDoc(doc(db, 'partidos', id), { [`jugadores.${libres[0]}`]: { alias: nombre, invitadoPor: user.uid, invitadoPorAlias: yoAlias, t: Date.now() } }); $('p-msg').textContent = `¡Listo! ${nombre} quedó anotado como invitado tuyo.`; }
+  const campo = (P.aprobacion && user.uid !== P.orgUid) ? 'pendientes' : 'jugadores';
+  const libres2 = libres.filter((k) => !(P.pendientes && P.pendientes[k]));
+  if (!libres2.length) { $('p-msg').textContent = 'Ya anotaste 3 amigos.'; return; }
+  try { await updateDoc(doc(db, 'partidos', id), { [`${campo}.${libres2[0]}`]: { alias: nombre, invitadoPor: user.uid, invitadoPorAlias: yoAlias, t: Date.now() } }); $('p-msg').textContent = campo === 'pendientes' ? `Pediste lugar para ${nombre}. El organizador lo tiene que aceptar.` : `¡Listo! ${nombre} quedó anotado como invitado tuyo.`; }
   catch (e) { $('p-msg').textContent = 'No se pudo: ' + (e.code === 'permission-denied' ? 'el partido está completo o no tenés permiso.' : e.message); }
+};
+const resolver = async (k, ok) => {
+  const j = P.pendientes && P.pendientes[k]; if (!j) return;
+  if (ok && Object.keys(P.jugadores || {}).length >= P.cupo) { $('p-msg').textContent = 'El partido ya está completo.'; return; }
+  const upd = { [`pendientes.${k}`]: deleteField() }; if (ok) upd[`jugadores.${k}`] = { ...j, t: Date.now() };
+  try { await updateDoc(doc(db, 'partidos', id), upd); } catch (e) { $('p-msg').textContent = 'No se pudo: ' + e.message; }
 };
 const quitar = async (k) => {
   if (!confirm('¿Sacar a este invitado del partido?')) return;
