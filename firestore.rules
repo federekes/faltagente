@@ -17,7 +17,7 @@ service cloud.firestore {
     }
 
     // Partidos: los ve cualquiera; los crea un usuario logueado como organizador;
-    // cada jugador solo puede anotarse o bajarse a sí mismo, sin pasar el cupo.
+    // cada jugador solo puede anotarse o bajarse a sí mismo (y hasta 3 amigos invitados), sin pasar el cupo.
     match /partidos/{pid} {
       allow read: if true;
       allow create: if request.auth != null
@@ -28,7 +28,7 @@ service cloud.firestore {
       allow update: if request.auth != null && (
         (resource.data.orgUid == request.auth.uid && request.resource.data.orgUid == resource.data.orgUid)
         || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['jugadores'])
-            && request.resource.data.jugadores.diff(resource.data.jugadores).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.jugadores.diff(resource.data.jugadores).affectedKeys().hasOnly([request.auth.uid, request.auth.uid + '_inv1', request.auth.uid + '_inv2', request.auth.uid + '_inv3'])
             && request.resource.data.jugadores.size() <= resource.data.cupo)
       );
       allow delete: if request.auth != null && resource.data.orgUid == request.auth.uid;

@@ -136,6 +136,10 @@ let P = null, user = null;
 const pad = (n) => String(n).padStart(2, '0');
 setInterval(tickLCD, 1000);
 const fila = (uid, j) => {
+  if (j.invitadoPor) {
+    const puedo = user && (j.invitadoPor === user.uid || user.uid === P.orgUid);
+    return `<div style="display:flex;align-items:center;gap:12px;min-height:112px;padding:8px 10px;background:#0A0A0A;border:1px solid #2E3631"><span style="width:72px;height:90px;flex:none;border:2px solid #5A6A60;background:#2E3631;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:32px">${esc((j.alias || '?')[0])}</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0;flex:1"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:700;font-size:20px">${esc(j.alias)}</span><span style="font-size:12px;font-weight:700;letter-spacing:1px;color:#0A0A0A;background:#B8B8B8;padding:1px 5px">INVITADO</span></span><span style="font-size:16px;color:#D0D0D0">invitado de <strong style="color:#7CC4FF">${esc(j.invitadoPorAlias)}</strong></span><span style="font-size:15px;color:#B8B8B8">primer partido</span></span>${puedo ? `<button type="button" data-quitar="${esc(uid)}" style="min-height:44px;padding:0 12px;background:none;border:2px solid #8A8A8A;color:#fff;font-family:inherit;font-size:15px;cursor:pointer">Quitar</button>` : ''}</div>`;
+  }
   const pr = perfiles[uid] || {}, org = uid === P.orgUid, me = user && uid === user.uid;
   const foto = pr.foto ? `<span style="width:72px;height:90px;flex:none;border:2px solid ${org ? '#7CC4FF' : '#5A6A60'};background:#2E3631 url('${pr.foto}') center/cover"></span>` : `<span style="width:72px;height:90px;flex:none;border:2px solid ${org ? '#7CC4FF' : '#5A6A60'};background:#2E3631;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:32px">${esc((j.alias || '?')[0])}</span>`;
   const tag = org ? '<span style="font-size:12px;font-weight:700;letter-spacing:1px;color:#0A0A0A;background:#7CC4FF;padding:1px 5px">ORGANIZA</span>' : me ? '<span style="font-size:12px;font-weight:700;letter-spacing:1px;color:#0A0A0A;background:#3DDC5A;padding:1px 5px">VOS</span>' : '';
@@ -145,7 +149,7 @@ const fila = (uid, j) => {
 const libre = '<div style="display:flex;align-items:center;gap:12px;min-height:112px;padding:8px 10px;border:2px dashed #5A6A60"><span style="width:72px;height:90px;flex:none;border:2px dashed #8A8A8A;display:flex;align-items:center;justify-content:center;color:#B8B8B8;font-family:Anton,sans-serif;font-size:28px">+</span><span style="font-weight:700;font-size:18px;letter-spacing:1px;color:#B8B8B8">LUGAR LIBRE</span></div>';
 const pintar = async () => {
   const js = Object.entries(P.jugadores || {}).sort((a, b) => (a[1].t || 0) - (b[1].t || 0));
-  await Promise.all(js.filter(([u]) => !(u in perfiles)).map(async ([u]) => { try { const s = await getDoc(doc(db, 'jugadores', u)); perfiles[u] = s.exists() ? s.data() : {}; } catch (e) { perfiles[u] = {}; } }));
+  await Promise.all(js.filter(([u, j]) => !j.invitadoPor && !(u in perfiles)).map(async ([u]) => { try { const s = await getDoc(doc(db, 'jugadores', u)); perfiles[u] = s.exists() ? s.data() : {}; } catch (e) { perfiles[u] = {}; } }));
   const n = js.length, falta = Math.max(0, P.cupo - n), half = P.cupo / 2;
   document.title = `${P.cancha} · ${P.dia} ${P.fecha} · Falta Gente`;
   $('p-estilo').textContent = P.estilo; $('p-cancha').textContent = P.cancha.toUpperCase(); $('p-dir').textContent = P.direccion;
@@ -167,8 +171,12 @@ const pintar = async () => {
   else if (yo) h = btn('ESTÁS ANOTADO · BAJARME', 'none', '#fff', false);
   else if (falta === 0) h = btn('PARTIDO COMPLETO', '#2E3631', '#8A9A90', true);
   else h = btn('ANOTARME · $' + P.precio, '#3DDC5A', '#0A0A0A', false);
+  const misInv = user ? js.filter(([u, j]) => j.invitadoPor === user.uid).length : 0;
+  if (yo && falta > 0 && misInv < 3) h += `<form id="p-amigo" style="margin-top:14px;display:flex;flex-direction:column;gap:8px;text-align:left"><label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">ANOTAR A UN AMIGO<span style="display:flex;gap:8px;flex-wrap:wrap"><input id="p-amigo-nombre" maxlength="20" required placeholder="Nombre de tu amigo" style="flex:1 1 200px;min-height:56px;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-family:inherit;font-size:20px;padding:0 14px"><button type="submit" style="min-height:56px;padding:0 22px;background:none;border:2px solid #fff;color:#fff;font-family:Anton,sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer">AGREGAR</button></span></label><span style="font-size:16px;color:#B8B8B8">Aparece como invitado tuyo. Si tu amigo falta, el lugar lo pagás vos. Podés anotar hasta 3.</span></form>`;
   $('p-accion').innerHTML = h;
   const b = $('p-btn'); if (b && !b.disabled) b.onclick = accion;
+  const fa = $('p-amigo'); if (fa) fa.onsubmit = agregarAmigo;
+  document.querySelectorAll('[data-quitar]').forEach((q) => q.onclick = () => quitar(q.dataset.quitar));
   const url = location.href, txt = `Falta gente en ${P.cancha} · ${P.dia} ${P.fecha} ${P.hora} · ${$('p-falta').textContent} ¡Anotate! ${url}`;
   $('p-wa').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
   $('p-estado').hidden = true; $('p-cont').hidden = false;
@@ -177,11 +185,23 @@ const accion = async () => {
   const b = $('p-btn'); b.disabled = true; $('p-msg').textContent = '';
   try {
     const yo = P.jugadores && P.jugadores[user.uid];
-    if (yo) await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: deleteField() });
+    if (yo) { const upd = { [`jugadores.${user.uid}`]: deleteField() }; Object.entries(P.jugadores).forEach(([k, j]) => { if (j.invitadoPor === user.uid) upd[`jugadores.${k}`] = deleteField(); }); await updateDoc(doc(db, 'partidos', id), upd); }
     else { const s = await getDoc(doc(db, 'jugadores', user.uid)); const pr = s.exists() ? s.data() : null;
       if (!pr || !pr.alias) { $('p-msg').innerHTML = 'Antes de anotarte, <a href="registro.html?volver=' + encodeURIComponent('partido.html?id=' + id) + '" style="color:#3DDC5A">completá tu perfil</a>.'; b.disabled = false; return; }
       perfiles[user.uid] = pr; await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: { alias: pr.alias, t: Date.now() } }); $('p-msg').textContent = '¡Listo, estás anotado!'; }
   } catch (e) { $('p-msg').textContent = 'No se pudo: ' + (e.code === 'permission-denied' ? 'el partido ya está completo o no tenés permiso.' : e.message); b.disabled = false; }
+};
+const agregarAmigo = async (ev) => {
+  ev.preventDefault(); const nombre = $('p-amigo-nombre').value.trim().toUpperCase(); if (!nombre) return;
+  const libres = [1, 2, 3].map((n) => user.uid + '_inv' + n).filter((k) => !(P.jugadores && P.jugadores[k]));
+  if (!libres.length) { $('p-msg').textContent = 'Ya anotaste 3 amigos.'; return; }
+  const yoAlias = (perfiles[user.uid] && perfiles[user.uid].alias) || (P.jugadores[user.uid] && P.jugadores[user.uid].alias) || '';
+  try { await updateDoc(doc(db, 'partidos', id), { [`jugadores.${libres[0]}`]: { alias: nombre, invitadoPor: user.uid, invitadoPorAlias: yoAlias, t: Date.now() } }); $('p-msg').textContent = `¡Listo! ${nombre} quedó anotado como invitado tuyo.`; }
+  catch (e) { $('p-msg').textContent = 'No se pudo: ' + (e.code === 'permission-denied' ? 'el partido está completo o no tenés permiso.' : e.message); }
+};
+const quitar = async (k) => {
+  if (!confirm('¿Sacar a este invitado del partido?')) return;
+  try { await updateDoc(doc(db, 'partidos', id), { [`jugadores.${k}`]: deleteField() }); } catch (e) { $('p-msg').textContent = 'No se pudo quitar: ' + e.message; }
 };
 if (!id) $('p-estado').textContent = 'NO ENCONTRAMOS ESE PARTIDO';
 else {
