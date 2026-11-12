@@ -204,12 +204,14 @@ $('f-perfil').onsubmit = async (ev) => { ev.preventDefault(); const e = $('e-per
   $('b-guardar').disabled = true; $('b-guardar').textContent = 'GUARDANDO…';
   try { await setDoc(doc(db, 'jugadores', u.uid), p, { merge: true });
     await setDoc(doc(db, 'jugadores', u.uid, 'privado', 'contacto'), { email: u.email || '', telefono: $('i-tel').value.trim(), aceptoPrivacidad: true, fecha: serverTimestamp() }, { merge: true });
-    perfil = p; listo(p); window.dispatchEvent(new Event('fg-perfil')); } catch (err) { e.textContent = msg(err); e.hidden = false; }
+    perfil = p; window.dispatchEvent(new Event('fg-perfil')); const vv = new URLSearchParams(location.search).get('volver'); if (vv && /^[\w.-]+\.html(\?[\w=&%-]*)?$/.test(vv)) { location.href = vv; return; } listo(p); } catch (err) { e.textContent = msg(err); e.hidden = false; }
   $('b-guardar').disabled = false; $('b-guardar').textContent = 'GUARDAR PERFIL'; };
 onAuthStateChanged(auth, async (u) => {
   if (!u) { perfil = null; show('v-login'); return; }
   show('v-loading');
   try { const s = await getDoc(doc(db, 'jugadores', u.uid)); perfil = s.exists() ? s.data() : null; } catch (e) { perfil = null; }
+  const volver = new URLSearchParams(location.search).get('volver');
+  if (perfil && perfil.alias && volver && /^[\w.-]+\.html(\?[\w=&%-]*)?$/.test(volver)) { location.href = volver; return; }
   if (perfil && perfil.alias) listo(perfil); else { if (u.displayName) $('i-nombre').value = u.displayName; show('v-perfil'); }
 });
 if (location.hash === '#crear') { crear = true; setModo(); }

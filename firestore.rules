@@ -15,5 +15,23 @@ service cloud.firestore {
         allow read, write: if request.auth != null && request.auth.uid == uid;
       }
     }
+
+    // Partidos: los ve cualquiera; los crea un usuario logueado como organizador;
+    // cada jugador solo puede anotarse o bajarse a sí mismo, sin pasar el cupo.
+    match /partidos/{pid} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.orgUid == request.auth.uid
+        && request.resource.data.cupo in [10, 14]
+        && request.resource.data.precio is int && request.resource.data.precio >= 0
+        && request.resource.data.jugadores.keys().hasOnly([request.auth.uid]);
+      allow update: if request.auth != null && (
+        (resource.data.orgUid == request.auth.uid && request.resource.data.orgUid == resource.data.orgUid)
+        || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['jugadores'])
+            && request.resource.data.jugadores.diff(resource.data.jugadores).affectedKeys().hasOnly([request.auth.uid])
+            && request.resource.data.jugadores.size() <= resource.data.cupo)
+      );
+      allow delete: if request.auth != null && resource.data.orgUid == request.auth.uid;
+    }
   }
 }

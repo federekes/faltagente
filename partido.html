@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partido · Falta Gente</title>
+<meta property="og:title" content="Falta gente · Entrá y anotate"><meta property="og:description" content="Partido de fútbol en Falta Gente. Mirá quiénes van y anotate."><meta property="og:image" content="https://federekes.github.io/faltagente/og-inicio.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box} body{margin:0} button,input,select{font:inherit} a{color:#fff} [hidden]{display:none!important}
+.err{color:#FF8A80;font-weight:700;font-size:17px} .ok{color:#3DDC5A;font-weight:700}
+</style>
+<style id="fg-mobile">
+.fg-burger,.fg-toggle,.fg-filter-btn{display:none}
+@media (max-width:760px){
+ .fg-hdr{flex-wrap:wrap!important;justify-content:space-between!important;gap:0!important;padding:10px 16px!important}
+ .fg-hdr>a:first-child span{font-size:26px!important}
+ .fg-hdr>a:first-child svg{width:34px;height:34px}
+ .fg-burger{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:2px solid #3A4A40;color:#fff;cursor:pointer}
+ .fg-nav,.fg-auth{display:none!important;width:100%}
+ .fg-hdr.open .fg-nav{display:flex!important;flex-direction:column!important;gap:0!important;margin-top:10px}
+ .fg-hdr.open .fg-auth{display:flex!important;padding:12px 0 6px;gap:10px!important}
+ .fg-nav a{width:100%;min-height:54px!important;font-size:21px!important;border-bottom:1px solid #2A2A2A!important}
+ .fg-auth a{flex:1;justify-content:center;min-height:52px!important}
+ .fg-card:not(.open) .fg-more{display:none!important}
+ .fg-toggle{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-card.open .fg-toggle .fg-arrow{transform:rotate(180deg)}
+ .fg-filter-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-filters{display:none!important}
+ .fg-filters.open{display:flex!important;flex-direction:column;align-items:stretch!important;width:100%}
+ .fg-filters.open select{width:100%}
+ .fg-teams{grid-template-columns:1fr!important}
+ main,section{padding-left:14px!important;padding-right:14px!important}
+ .fg-card [style*="font-size:32px;line-height:1"]{white-space:nowrap}
+ [data-cd-part]+span{font-size:11px!important;letter-spacing:1px!important}
+ [style*="clamp(34px,3.6vw,46px)"]{font-size:26px!important;letter-spacing:1px!important}
+ [style*="clamp(56px,6vw,80px)"]{font-size:50px!important}
+}
+</style>
+</head>
+<body style="margin:0;background:#0F1C15">
+<div style="min-height:100vh;background:repeating-linear-gradient(90deg,#13231A 0 64px,#0F1C15 64px 128px);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:18px;display:flex;flex-direction:column">
+<header style="background:#0A0A0A;border-bottom:3px solid #3DDC5A">
+<div class="fg-hdr" style="max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+<a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff"><svg width="40" height="40" viewBox="0 0 36 36" aria-hidden="true" style="flex:none"><circle cx="18" cy="18" r="16" fill="#fff"/><polygon points="18,11 24,15.5 22,22.5 14,22.5 12,15.5" fill="#0A0A0A"/><path d="M18 11V3M24 15.5L32 12M22 22.5L27 29M14 22.5L9 29M12 15.5L4 12" stroke="#0A0A0A" stroke-width="2" fill="none"/></svg><span style="font-family:Anton,sans-serif;font-size:30px;font-style:italic;letter-spacing:1px;color:#3DDC5A">FALTA GENTE</span></a><button class="fg-burger" type="button" aria-label="Abrir menú" aria-expanded="false"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="fg-nav" aria-label="Principal" style="display:flex;flex-wrap:wrap;gap:4px 24px;flex:1 1 auto">
+<a href="index.html#partidos" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">JUGAR PARTIDO</a>
+<a href="crear.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CREAR PARTIDO</a>
+<a href="index.html#como" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CÓMO FUNCIONA</a>
+<a href="registro.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">MI PERFIL</a>
+</nav>
+<div class="fg-auth" style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="registro.html" style="min-height:44px;padding:0 18px;display:flex;align-items:center;border:2px solid #fff;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">INGRESAR</a>
+<a href="registro.html#crear" style="min-height:44px;padding:0 18px;display:flex;align-items:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">REGISTRARME</a>
+</div>
+</div>
+</header>
+<main style="flex:1;width:100%;max-width:1200px;margin:0 auto;padding:24px 24px 64px;display:flex;flex-direction:column;gap:24px">
+<a href="index.html#partidos" style="align-self:flex-start;min-height:44px;display:flex;align-items:center;font-family:Anton,sans-serif;font-size:18px;letter-spacing:1px;text-decoration:none">‹ VOLVER A PARTIDOS</a>
+<div id="p-estado" style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:24px;text-align:center;font-family:Anton,sans-serif;font-size:26px;letter-spacing:2px">CARGANDO PARTIDO…</div>
+<div id="p-cont" hidden style="display:flex;flex-direction:column;gap:24px">
+<section style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px">
+<div id="p-estilo" style="background:#0A0A0A;border-bottom:3px solid #3DDC5A;padding:10px 20px;font-family:Anton,sans-serif;font-size:28px;line-height:1;letter-spacing:3px"></div>
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1"><span style="font-family:'Barlow Condensed',sans-serif;font-weight:500;font-size:.5em;color:#B8B8B8;vertical-align:middle">Cancha:</span> <span id="p-cancha"></span></h1>
+<div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px 16px;font-size:21px;color:#E6E6E6"><span><span style="color:#B8B8B8">Dirección:</span> <span id="p-dir"></span></span><a id="p-mapa" target="_blank" rel="noopener" style="min-height:40px;display:flex;align-items:center;font-weight:700;letter-spacing:1px;text-decoration-color:#3DDC5A;text-underline-offset:4px">VER UBICACIÓN ›</a></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);width:100%;max-width:620px;background:#0A0A0A;border:1px solid #2E3631">
+<div style="display:flex;flex-direction:column;justify-content:center;padding:14px 20px"><span id="p-dia" style="font-family:Anton,sans-serif;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:3px"></span><span id="p-fecha" style="font-family:Anton,sans-serif;font-size:clamp(50px,6vw,80px);line-height:1"></span></div>
+<div style="display:flex;flex-direction:column;justify-content:center;padding:14px 20px;border-left:1px solid #2E3631"><span style="font-weight:700;font-size:18px;letter-spacing:3px;color:#B8B8B8">HORA</span><span id="p-hora" style="font-family:Anton,sans-serif;font-size:clamp(50px,6vw,80px);line-height:1;color:#3DDC5A"></span></div></div>
+<div style="font-size:20px;color:#D0D0D0"><span style="letter-spacing:3px;font-size:15px;color:#B8B8B8;font-weight:700">EMPIEZA EN </span><span id="p-cd" style="font-family:Anton,sans-serif;font-size:26px;color:#fff"></span></div>
+<div style="font-size:21px;color:#D0D0D0">Organizado por <strong id="p-org" style="color:#7CC4FF"></strong></div>
+<div id="p-nota" style="width:100%;max-width:620px;background:#0A0A0A;border:1px solid #2E3631;padding:14px 18px;font-size:24px;font-style:italic"></div>
+</section>
+<section style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:24px;width:100%;max-width:1100px;align-self:center;display:flex;flex-direction:column;gap:14px">
+<h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:40px;letter-spacing:2px;text-align:center">JUGADORES</h2>
+<div id="p-seg" style="display:grid;gap:4px"></div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:22px;letter-spacing:1px"><span id="p-cuenta"></span><span id="p-falta" style="font-family:Anton,sans-serif;font-weight:400;font-size:40px;line-height:1"></span></div>
+<div class="fg-teams" id="p-equipos" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px"></div>
+</section>
+<aside style="width:100%;max-width:820px;align-self:center;border:2px solid #3DDC5A;background:#121614;box-shadow:0 16px 40px rgba(0,0,0,.5);padding:32px;display:flex;flex-direction:column;gap:16px;text-align:center">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="font-weight:700;font-size:20px;letter-spacing:3px;color:#B8B8B8">PRECIO POR JUGADOR</span><span id="p-precio" style="font-family:Anton,sans-serif;font-size:72px;line-height:1"></span></div>
+<div id="p-accion"></div>
+<p id="p-msg" role="status" style="margin:0;font-weight:700;font-size:18px;color:#FFB020"></p>
+<span style="font-weight:700;font-size:19px">Si no se arma el partido, se reintegra el importe.</span>
+<span style="font-size:17px;color:#B8B8B8">Por ahora el pago se arregla con el organizador. Muy pronto vas a poder pagar acá.</span>
+<a id="p-wa" target="_blank" rel="noopener" style="min-height:60px;display:flex;align-items:center;justify-content:center;gap:10px;border:2px solid #fff;font-family:Anton,sans-serif;font-size:22px;letter-spacing:2px;text-decoration:none">COMPARTIR POR WHATSAPP</a>
+</aside>
+</div>
+</main>
+<footer style="background:#0A0A0A;border-top:3px solid #3DDC5A">
+<div style="max-width:1200px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:#B8B8B8;font-size:16px"><span>Falta Gente · Fútbol 5 y fútbol 7 en todo Uruguay</span><span>¿Tenés una cancha? <a href="#">Sumala</a></span></div>
+</footer>
+</div>
+<script id="fg-mobile-js">
+document.addEventListener('click',function(e){
+ var b=e.target.closest('.fg-burger');if(b){var h=b.closest('.fg-hdr');var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o);return;}
+ var t=e.target.closest('.fg-toggle');if(t){var c=t.closest('.fg-card');var o2=c.classList.toggle('open');t.setAttribute('aria-expanded',o2);t.querySelector('.fg-label').textContent=o2?'OCULTAR DETALLE':'VER DETALLE';return;}
+ var f=e.target.closest('.fg-filter-btn');if(f){var o3=document.querySelector('.fg-filters').classList.toggle('open');f.setAttribute('aria-expanded',o3);}
+});
+</script>
+<script type="module" id="fg-auth-js">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const cfg = { apiKey: "AIzaSyA9YJEk1XIsZibppMATtIDeAwRa6-8ab5w", authDomain: "faltagente.firebaseapp.com", projectId: "faltagente", storageBucket: "faltagente.firebasestorage.app", messagingSenderId: "540133272356", appId: "1:540133272356:web:4345443a9be6174b6ae1b1" };
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+const box = document.querySelector('.fg-auth'); const original = box ? box.innerHTML : '';
+const esc = (t) => String(t || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pintar = (u, p) => {
+  if (!box) return;
+  if (!u) { box.innerHTML = original; return; }
+  const alias = (p && p.alias) || (u.displayName || u.email || 'MI CUENTA').split(' ')[0].toUpperCase();
+  const foto = p && p.foto ? `<span style="width:36px;height:45px;flex:none;border:2px solid #3DDC5A;background:#2E3631 url('${p.foto}') center/cover"></span>`
+    : `<span style="width:36px;height:36px;flex:none;border-radius:50%;background:#3DDC5A;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:18px">${esc(alias[0])}</span>`;
+  box.innerHTML = `<a href="registro.html" title="Mi perfil" style="min-height:48px;display:flex;align-items:center;gap:10px;padding:0 12px 0 4px;border:2px solid #3A4A40;color:#fff;text-decoration:none">${foto}<span style="display:flex;flex-direction:column;line-height:1.05"><span style="font-size:12px;letter-spacing:1px;color:#3DDC5A;font-weight:700">CONECTADO</span><span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:1px">${esc(alias)}</span></span></a>`
+    + `<button type="button" class="fg-salir" style="min-height:48px;padding:0 14px;background:none;border:0;color:#B8B8B8;font-family:inherit;font-size:16px;text-decoration:underline;cursor:pointer">Salir</button>`;
+  box.querySelector('.fg-salir').onclick = () => signOut(auth);
+};
+let usuario = null;
+const cargar = async () => { let p = null; if (usuario) { try { const s = await getDoc(doc(db, 'jugadores', usuario.uid)); p = s.exists() ? s.data() : null; } catch (e) {} } pintar(usuario, p); };
+onAuthStateChanged(auth, (u) => { usuario = u; cargar(); });
+window.addEventListener('fg-perfil', cargar);
+</script>
+<script type="module">
+import { auth, db, esc } from "./fg.js";
+import { doc, getDoc, onSnapshot, updateDoc, deleteField } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const $ = (i) => document.getElementById(i);
+const id = new URLSearchParams(location.search).get('id');
+const btn = (t, bg, fg, dis) => `<button id="p-btn" type="button" ${dis ? 'disabled' : ''} style="min-height:96px;width:100%;background:${bg};color:${fg};border:${bg === 'none' ? '2px solid #fff' : '0'};font-family:Anton,sans-serif;font-size:clamp(26px,3.5vw,40px);letter-spacing:2px;cursor:${dis ? 'not-allowed' : 'pointer'}">${t}</button>`;
+const perfiles = {};
+let P = null, user = null;
+const pad = (n) => String(n).padStart(2, '0');
+setInterval(() => { if (!P) return; const ms = Math.max(0, new Date(P.fechaISO) - Date.now()); $('p-cd').textContent = ms ? `${Math.floor(ms / 864e5)} d ${pad(Math.floor(ms / 36e5) % 24)} h ${pad(Math.floor(ms / 6e4) % 60)} min ${pad(Math.floor(ms / 1e3) % 60)} s` : '¡Ya empezó!'; }, 1000);
+const fila = (uid, j) => {
+  const pr = perfiles[uid] || {}, org = uid === P.orgUid, me = user && uid === user.uid;
+  const foto = pr.foto ? `<span style="width:72px;height:90px;flex:none;border:2px solid ${org ? '#7CC4FF' : '#5A6A60'};background:#2E3631 url('${pr.foto}') center/cover"></span>` : `<span style="width:72px;height:90px;flex:none;border:2px solid ${org ? '#7CC4FF' : '#5A6A60'};background:#2E3631;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:32px">${esc((j.alias || '?')[0])}</span>`;
+  const tag = org ? '<span style="font-size:12px;font-weight:700;letter-spacing:1px;color:#0A0A0A;background:#7CC4FF;padding:1px 5px">ORGANIZA</span>' : me ? '<span style="font-size:12px;font-weight:700;letter-spacing:1px;color:#0A0A0A;background:#3DDC5A;padding:1px 5px">VOS</span>' : '';
+  const meta = [pr.edad ? pr.edad + ' años' : '', pr.departamento || '', (pr.partidosJugados || 0) ? pr.partidosJugados + ' partidos' : 'nuevo en Falta Gente'].filter(Boolean).join(' · ');
+  return `<div style="display:flex;align-items:center;gap:12px;min-height:112px;padding:8px 10px;background:#0A0A0A;border:1px solid ${org ? '#7CC4FF' : '#2E3631'}">${foto}<span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-weight:700;font-size:20px;color:${org ? '#7CC4FF' : '#fff'}">${esc(j.alias)}</span>${tag}</span>${pr.resena ? `<span style="font-size:17px;font-style:italic;color:#E6E6E6">“${esc(pr.resena)}”</span>` : ''}<span style="font-size:15px;color:#B8B8B8">${esc(meta)}</span></span></div>`;
+};
+const libre = '<div style="display:flex;align-items:center;gap:12px;min-height:112px;padding:8px 10px;border:2px dashed #5A6A60"><span style="width:72px;height:90px;flex:none;border:2px dashed #8A8A8A;display:flex;align-items:center;justify-content:center;color:#B8B8B8;font-family:Anton,sans-serif;font-size:28px">+</span><span style="font-weight:700;font-size:18px;letter-spacing:1px;color:#B8B8B8">LUGAR LIBRE</span></div>';
+const pintar = async () => {
+  const js = Object.entries(P.jugadores || {}).sort((a, b) => (a[1].t || 0) - (b[1].t || 0));
+  await Promise.all(js.filter(([u]) => !(u in perfiles)).map(async ([u]) => { try { const s = await getDoc(doc(db, 'jugadores', u)); perfiles[u] = s.exists() ? s.data() : {}; } catch (e) { perfiles[u] = {}; } }));
+  const n = js.length, falta = Math.max(0, P.cupo - n), half = P.cupo / 2;
+  document.title = `${P.cancha} · ${P.dia} ${P.fecha} · Falta Gente`;
+  $('p-estilo').textContent = P.estilo; $('p-cancha').textContent = P.cancha.toUpperCase(); $('p-dir').textContent = P.direccion;
+  $('p-mapa').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(P.cancha + ', ' + P.direccion);
+  $('p-dia').textContent = P.dia; $('p-fecha').textContent = P.fecha; $('p-hora').textContent = P.hora; $('p-org').textContent = P.orgAlias;
+  $('p-nota').hidden = !P.nota; $('p-nota').textContent = P.nota ? '“' + P.nota + '”' : '';
+  $('p-seg').style.gridTemplateColumns = `repeat(${P.cupo},minmax(0,1fr))`;
+  $('p-seg').innerHTML = Array.from({ length: P.cupo }, (_, i) => i < n ? `<span style="height:30px;background:#3DDC5A;color:#0A0A0A;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i + 1}</span>` : `<span style="height:30px;border:2px dashed #8A8A8A;color:#B8B8B8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i + 1}</span>`).join('');
+  $('p-cuenta').textContent = `${n} DE ${P.cupo} JUGADORES`;
+  $('p-falta').textContent = falta === 0 ? '¡COMPLETO!' : falta === 1 ? '¡FALTA 1!' : 'FALTAN ' + falta; $('p-falta').style.color = falta <= 1 ? '#FFB020' : '#3DDC5A';
+  const eq = [[], []]; js.forEach(([u, j], i) => eq[i % 2].push(fila(u, j)));
+  $('p-equipos').innerHTML = eq.map((e, k) => `<div style="display:flex;flex-direction:column;gap:8px;min-width:0"><div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid ${k ? '#3DDC5A' : '#fff'};padding-bottom:6px"><span style="font-family:Anton,sans-serif;font-size:26px;letter-spacing:2px">EQUIPO ${k + 1}</span><span style="font-weight:700;color:#B8B8B8">${e.length} de ${half}</span></div>${e.join('')}${libre.repeat(Math.max(0, half - e.length))}</div>`).join('');
+  $('p-precio').textContent = '$' + P.precio;
+  const yo = user && P.jugadores && P.jugadores[user.uid];
+  let h;
+  if (!user) h = `<a href="registro.html?volver=${encodeURIComponent(location.pathname.split('/').pop() + location.search)}" style="min-height:96px;display:flex;align-items:center;justify-content:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:clamp(26px,3.5vw,40px);letter-spacing:2px;text-decoration:none">INGRESÁ PARA ANOTARTE</a>`;
+  else if (yo && user.uid === P.orgUid) h = btn('SOS EL ORGANIZADOR', '#2E3631', '#D0D0D0', true);
+  else if (yo) h = btn('ESTÁS ANOTADO · BAJARME', 'none', '#fff', false);
+  else if (falta === 0) h = btn('PARTIDO COMPLETO', '#2E3631', '#8A9A90', true);
+  else h = btn('ANOTARME · $' + P.precio, '#3DDC5A', '#0A0A0A', false);
+  $('p-accion').innerHTML = h;
+  const b = $('p-btn'); if (b && !b.disabled) b.onclick = accion;
+  const url = location.href, txt = `Falta gente en ${P.cancha} · ${P.dia} ${P.fecha} ${P.hora} · ${$('p-falta').textContent} ¡Anotate! ${url}`;
+  $('p-wa').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
+  $('p-estado').hidden = true; $('p-cont').hidden = false;
+};
+const accion = async () => {
+  const b = $('p-btn'); b.disabled = true; $('p-msg').textContent = '';
+  try {
+    const yo = P.jugadores && P.jugadores[user.uid];
+    if (yo) await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: deleteField() });
+    else { const s = await getDoc(doc(db, 'jugadores', user.uid)); const pr = s.exists() ? s.data() : null;
+      if (!pr || !pr.alias) { $('p-msg').innerHTML = 'Antes de anotarte, <a href="registro.html?volver=' + encodeURIComponent('partido.html?id=' + id) + '" style="color:#3DDC5A">completá tu perfil</a>.'; b.disabled = false; return; }
+      perfiles[user.uid] = pr; await updateDoc(doc(db, 'partidos', id), { [`jugadores.${user.uid}`]: { alias: pr.alias, t: Date.now() } }); $('p-msg').textContent = '¡Listo, estás anotado!'; }
+  } catch (e) { $('p-msg').textContent = 'No se pudo: ' + (e.code === 'permission-denied' ? 'el partido ya está completo o no tenés permiso.' : e.message); b.disabled = false; }
+};
+if (!id) $('p-estado').textContent = 'NO ENCONTRAMOS ESE PARTIDO';
+else {
+  auth.onAuthStateChanged((u) => { user = u; if (P) pintar(); });
+  onSnapshot(doc(db, 'partidos', id), (s) => { if (!s.exists()) { $('p-estado').hidden = false; $('p-cont').hidden = true; $('p-estado').textContent = 'ESTE PARTIDO YA NO EXISTE'; return; } P = s.data(); pintar(); },
+    (e) => { $('p-estado').textContent = 'NO SE PUDO CARGAR EL PARTIDO'; console.warn(e); });
+}
+</script>
+</body>
+</html>

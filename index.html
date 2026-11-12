@@ -94,7 +94,7 @@ a{color:#fff}a:hover{color:#3DDC5A}
 <label style="display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:15px;letter-spacing:1px;color:#B8B8B8">EDAD<select style="min-height:44px;min-width:130px;background:#141414;border:2px solid #2A2A2A;color:#fff;font-family:inherit;font-size:18px;padding:0 10px"><option>Cualquiera</option><option>18–30</option><option>30–45</option><option>45+</option></select></label>
 </form>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
+<div id="grid-partidos" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px">
 
 <article class="fg-card" style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,0.45);padding:16px;display:flex;flex-direction:column;gap:10px">
 <div style="margin:-16px -16px 6px;background:#0A0A0A;border-bottom:3px solid #3DDC5A;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:12px"><span style="font-family:Anton,sans-serif;font-size:28px;line-height:1;letter-spacing:3px;color:#fff">FÚTBOL 5 +30</span></div>
@@ -232,6 +232,37 @@ let usuario = null;
 const cargar = async () => { let p = null; if (usuario) { try { const s = await getDoc(doc(db, 'jugadores', usuario.uid)); p = s.exists() ? s.data() : null; } catch (e) {} } pintar(usuario, p); };
 onAuthStateChanged(auth, (u) => { usuario = u; cargar(); });
 window.addEventListener('fg-perfil', cargar);
+</script>
+<script type="module" id="fg-index-js">
+import { db, esc } from "./fg.js";
+import { collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const grid = document.getElementById('grid-partidos');
+const pin = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3DDC5A" stroke-width="2.4" style="flex:none"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+const card = (id, p) => {
+  const n = Object.keys(p.jugadores || {}).length, falta = Math.max(0, p.cupo - n);
+  const near = falta <= 1, col = near ? '#FFB020' : '#3DDC5A';
+  const ft = falta === 0 ? '¡COMPLETO!' : falta === 1 ? '¡FALTA 1!' : 'FALTAN ' + falta;
+  let seg = ''; for (let i = 1; i <= p.cupo; i++) seg += i <= n ? `<span style="height:24px;background:#3DDC5A;color:#0A0A0A;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i}</span>` : `<span style="height:24px;box-sizing:border-box;border:2px dashed #8A8A8A;color:#B8B8B8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i}</span>`;
+  return `<article class="fg-card" style="border:${near ? '2px solid #FFB020' : '1px solid #2E3631'};background:#121614;box-shadow:0 12px 32px rgba(0,0,0,0.45);padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="margin:-16px -16px 6px;background:#0A0A0A;border-bottom:3px solid #3DDC5A;padding:12px 16px;text-align:center;font-family:Anton,sans-serif;font-size:28px;line-height:1;letter-spacing:3px">${esc(p.estilo)}</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;background:#0A0A0A;border:1px solid #2E3631"><div style="display:flex;flex-direction:column;justify-content:center;padding:10px 14px"><span style="font-family:Anton,sans-serif;font-size:30px;line-height:1.05;letter-spacing:2px">${esc(p.dia)}</span><span style="font-family:Anton,sans-serif;font-size:48px;line-height:1">${esc(p.fecha)}</span></div><div style="display:flex;flex-direction:column;justify-content:center;padding:10px 16px;border-left:1px solid #2E3631"><span style="font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">HORA</span><span style="font-family:Anton,sans-serif;font-size:48px;line-height:1;color:#3DDC5A">${esc(p.hora)}</span></div></div>
+<div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;color:#D0D0D0"><span style="letter-spacing:3px;font-size:14px;color:#B8B8B8">EMPIEZA EN</span><span data-cd-short="${esc(p.fechaISO)}" style="font-family:Anton,sans-serif;font-weight:400;font-size:22px;color:#fff">…</span></div>
+<h3 style="margin:0;font-size:26px;line-height:1"><span style="color:#B8B8B8;font-weight:500">Cancha:</span> ${esc(p.cancha)}</h3>
+<div class="fg-more" style="display:flex;align-items:center;gap:6px;font-size:19px;color:#E6E6E6">${pin}<span><span style="color:#B8B8B8">Dirección:</span> ${esc(p.direccion)}</span></div>
+<div class="fg-more" style="color:#D0D0D0">Organizado por <strong style="color:#7CC4FF">${esc(p.orgAlias)}</strong></div>
+${p.nota ? `<div class="fg-more" style="font-size:19px;font-style:italic;color:#E6E6E6">“${esc(p.nota)}”</div>` : ''}
+<div class="fg-more" style="display:grid;grid-template-columns:repeat(${p.cupo},minmax(0,1fr));gap:4px">${seg}</div>
+<div style="display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:18px;letter-spacing:1px"><span>${n} DE ${p.cupo} JUGADORES</span><span style="color:${col};font-family:Anton,sans-serif;font-weight:400;font-size:32px;line-height:1;white-space:nowrap">${ft}</span></div>
+<div class="fg-more" style="display:flex;justify-content:space-between;align-items:baseline"><span style="color:#B8B8B8">Precio por jugador</span><span style="font-family:Anton,sans-serif;font-size:24px">$${esc(p.precio)}</span></div>
+<button class="fg-toggle" type="button" aria-expanded="false"><span class="fg-label">VER DETALLE</span></button>
+<a href="partido.html?id=${encodeURIComponent(id)}" style="min-height:80px;margin-top:4px;padding:0 12px;display:flex;align-items:center;justify-content:center;text-align:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:26px;line-height:1.1;letter-spacing:1px;text-decoration:none">VER PARTIDO Y ANOTARME ›</a></article>`;
+};
+try {
+  const desde = new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 16);
+  const snap = await getDocs(query(collection(db, 'partidos'), where('fechaISO', '>=', desde), orderBy('fechaISO')));
+  let html = ''; snap.forEach((d) => { html += card(d.id, d.data()); });
+  if (html) { grid.insertAdjacentHTML('afterbegin', html); }
+} catch (e) { console.warn('No se pudieron cargar los partidos', e); }
 </script>
 </body>
 </html>
