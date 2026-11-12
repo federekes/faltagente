@@ -205,7 +205,7 @@ $('f-perfil').onsubmit = async (ev) => { ev.preventDefault(); const e = $('e-per
   if (!dep) { e.textContent = 'Elegí tu departamento.'; e.hidden = false; return; }
   if (!$('i-acepto').checked) { e.textContent = 'Tenés que aceptar la política de privacidad.'; e.hidden = false; return; }
   const u = auth.currentUser; const p = { alias, nombre: $('i-nombre').value.trim(), edad, departamento: dep, resena: $('i-resena').value.trim(),
-    recomendadoPor: $('i-reco').value.trim().toUpperCase(), foto: fotoData, partidosJugados: (perfil && perfil.partidosJugados) || 0, actualizado: serverTimestamp() };
+    recomendadoPor: $('i-reco').value.trim().toUpperCase(), foto: fotoData, partidosJugados: (perfil && perfil.partidosJugados) || 0, actualizado: serverTimestamp() }; if (!perfil) p.creado = serverTimestamp();
   $('b-guardar').disabled = true; $('b-guardar').textContent = 'GUARDANDO…';
   try { await setDoc(doc(db, 'jugadores', u.uid), p, { merge: true });
     await setDoc(doc(db, 'jugadores', u.uid, 'privado', 'contacto'), { email: u.email || '', telefono: $('i-tel').value.trim(), aceptoPrivacidad: true, fecha: serverTimestamp() }, { merge: true });
@@ -220,6 +220,16 @@ onAuthStateChanged(auth, async (u) => {
   if (perfil && perfil.alias) listo(perfil); else { if (u.displayName) $('i-nombre').value = u.displayName; show('v-perfil'); }
 });
 if (location.hash === '#crear') { crear = true; setModo(); }
+</script>
+<script type="module" id="fg-stats-js">
+// Contador anónimo de visitas: sin cookies ni datos personales, solo suma 1 por día y página
+import { db } from "./fg.js";
+import { doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+try {
+  const dia = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montevideo' }).format(new Date());
+  setDoc(doc(db, 'stats', dia + '_registro'), { n: increment(1) }, { merge: true }).catch(() => {});
+  if (!sessionStorage.getItem('fg-s')) { sessionStorage.setItem('fg-s', '1'); setDoc(doc(db, 'stats', dia + '_sesiones'), { n: increment(1) }, { merge: true }).catch(() => {}); }
+} catch (e) {}
 </script>
 </body>
 </html>

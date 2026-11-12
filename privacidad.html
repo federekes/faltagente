@@ -54,7 +54,7 @@ aside[style*="position:sticky"]{top:100px!important}
 <ul><li><strong>Datos públicos de tu perfil:</strong> alias, nombre (si lo ponés), edad, departamento, foto, tu reseña, quién te recomendó, los partidos que jugaste y las calificaciones y comentarios que recibís. Estos datos los ven los demás usuarios.</li>
 <li><strong>Datos privados:</strong> tu mail y tu teléfono. No los ve ningún otro usuario.</li></ul>
 <h2 style="font-family:Anton,sans-serif;font-weight:400;font-size:28px">Para qué los usamos</h2>
-<ul><li>Para mostrar quién está anotado en cada partido y armar los equipos.</li><li>Para avisarte si un partido se confirma, queda en stand-by o se suspende.</li><li>No vendemos ni compartimos tus datos con terceros para publicidad.</li></ul>
+<ul><li>Para mostrar quién está anotado en cada partido y armar los equipos.</li><li>Para avisarte si un partido se confirma, queda en stand-by o se suspende.</li><li>No vendemos ni compartimos tus datos con terceros para publicidad.</li><li>Contamos las visitas de forma anónima (cuántas veces se abre cada página por día), sin cookies y sin guardar datos de quién visita.</li></ul>
 <h2 style="font-family:Anton,sans-serif;font-weight:400;font-size:28px">Dónde se guardan</h2>
 <p>Los datos se guardan en Firebase, un servicio de Google, con reglas para que solo vos puedas modificar tu perfil.</p>
 <h2 style="font-family:Anton,sans-serif;font-weight:400;font-size:28px">Tus derechos</h2>
@@ -92,4 +92,14 @@ let usuario = null;
 const cargar = async () => { let p = null; if (usuario) { try { const s = await getDoc(doc(db, 'jugadores', usuario.uid)); p = s.exists() ? s.data() : null; } catch (e) {} } pintar(usuario, p); };
 onAuthStateChanged(auth, (u) => { usuario = u; cargar(); });
 window.addEventListener('fg-perfil', cargar);
-</script></body></html>
+</script><script type="module" id="fg-stats-js">
+// Contador anónimo de visitas: sin cookies ni datos personales, solo suma 1 por día y página
+import { db } from "./fg.js";
+import { doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+try {
+  const dia = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montevideo' }).format(new Date());
+  setDoc(doc(db, 'stats', dia + '_privacidad'), { n: increment(1) }, { merge: true }).catch(() => {});
+  if (!sessionStorage.getItem('fg-s')) { sessionStorage.setItem('fg-s', '1'); setDoc(doc(db, 'stats', dia + '_sesiones'), { n: increment(1) }, { merge: true }).catch(() => {}); }
+} catch (e) {}
+</script>
+</body></html>

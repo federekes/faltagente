@@ -16,6 +16,13 @@ service cloud.firestore {
       }
     }
 
+    // Contador anónimo de visitas (sin datos personales): solo se puede sumar de a 1; lo lee solo el administrador
+    match /stats/{id} {
+      allow read: if request.auth != null && request.auth.uid == 'tzXrEdGyIdWtVk78YpP9PxmImzU2';
+      allow create: if id.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}_[a-z]+$') && request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == 1;
+      allow update: if request.resource.data.keys().hasOnly(['n']) && request.resource.data.n == resource.data.n + 1;
+    }
+
     // Partidos: los ve cualquiera; los crea un usuario logueado como organizador;
     // cada jugador solo puede anotarse o bajarse a sí mismo (y hasta 3 amigos invitados), sin pasar el cupo.
     match /partidos/{pid} {

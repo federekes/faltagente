@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Falta Gente</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box} body{margin:0} button,input,select{font:inherit} a{color:#fff} [hidden]{display:none!important}
+.err{color:#FF8A80;font-weight:700;font-size:17px} .ok{color:#3DDC5A;font-weight:700}
+</style>
+<style id="fg-mobile">
+.fg-burger,.fg-toggle,.fg-filter-btn{display:none}
+header{position:sticky;top:0;z-index:40;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+[id]{scroll-margin-top:100px}
+aside[style*="position:sticky"]{top:100px!important}
+@media (max-width:760px){
+ .fg-hdr{flex-wrap:wrap!important;justify-content:space-between!important;gap:0!important;padding:10px 16px!important}
+ .fg-hdr>a:first-child span{font-size:26px!important}
+ .fg-hdr>a:first-child svg{width:34px;height:34px}
+ .fg-burger{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:2px solid #3A4A40;color:#fff;cursor:pointer}
+ .fg-nav,.fg-auth{display:none!important;width:100%}
+ header{max-height:100vh;overflow-y:auto}
+ [id]{scroll-margin-top:84px}
+ .fg-hdr.open .fg-nav{display:flex!important;flex-direction:column!important;gap:0!important;margin-top:10px}
+ .fg-hdr.open .fg-auth{display:flex!important;padding:12px 0 6px;gap:10px!important}
+ .fg-nav a{width:100%;min-height:54px!important;font-size:21px!important;border-bottom:1px solid #2A2A2A!important}
+ .fg-auth a{flex:1;justify-content:center;min-height:52px!important}
+ .fg-card:not(.open) .fg-more{display:none!important}
+ .fg-toggle{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-card.open .fg-toggle .fg-arrow{transform:rotate(180deg)}
+ .fg-filter-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-filters{display:none!important}
+ .fg-filters.open{display:flex!important;flex-direction:column;align-items:stretch!important;width:100%}
+ .fg-filters.open select{width:100%}
+ .fg-teams{grid-template-columns:1fr!important}
+ main,section{padding-left:14px!important;padding-right:14px!important}
+ .fg-card [style*="font-size:32px;line-height:1"]{white-space:nowrap}
+ [data-cd-part]+span{font-size:11px!important;letter-spacing:1px!important}
+ [style*="clamp(34px,3.6vw,46px)"]{font-size:26px!important;letter-spacing:1px!important}
+ [style*="clamp(56px,6vw,80px)"]{font-size:50px!important}
+}
+</style>
+</head>
+<body style="margin:0;background:#0F1C15">
+<div style="min-height:100vh;background:repeating-linear-gradient(90deg,#13231A 0 64px,#0F1C15 64px 128px);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:18px;display:flex;flex-direction:column">
+<header style="background:#0A0A0A;border-bottom:3px solid #3DDC5A">
+<div class="fg-hdr" style="max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+<a href="index.html" aria-label="Falta Gente, ir al inicio" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff"><svg width="40" height="40" viewBox="0 0 36 36" aria-hidden="true" style="flex:none"><circle cx="18" cy="18" r="16" fill="#fff"/><polygon points="18,11 24,15.5 22,22.5 14,22.5 12,15.5" fill="#0A0A0A"/><path d="M18 11V3M24 15.5L32 12M22 22.5L27 29M14 22.5L9 29M12 15.5L4 12" stroke="#0A0A0A" stroke-width="2" fill="none"/></svg><span style="font-family:Anton,sans-serif;font-size:30px;font-style:italic;letter-spacing:1px;color:#3DDC5A">FALTA GENTE</span></a><button class="fg-burger" type="button" aria-label="Abrir menú" aria-expanded="false"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="fg-nav" aria-label="Principal" style="display:flex;flex-wrap:wrap;gap:4px 24px;flex:1 1 auto">
+<a href="index.html#partidos" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">JUGAR PARTIDO</a>
+<a href="crear.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CREAR PARTIDO</a>
+<a href="index.html#como" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CÓMO FUNCIONA</a>
+<a href="registro.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">MI PERFIL</a>
+</nav>
+<div class="fg-auth" style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="registro.html" style="min-height:44px;padding:0 18px;display:flex;align-items:center;border:2px solid #fff;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">INGRESAR</a>
+<a href="registro.html#crear" style="min-height:44px;padding:0 18px;display:flex;align-items:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">REGISTRARME</a>
+</div>
+</div>
+</header>
+<main style="flex:1;width:100%;max-width:1200px;margin:0 auto;padding:28px 24px 64px;display:flex;flex-direction:column;gap:22px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(40px,5vw,60px);line-height:1;color:#3DDC5A">PANEL</h1>
+<div id="a-estado" style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:22px;font-size:20px">Cargando…</div>
+<div id="a-cont" hidden style="display:flex;flex-direction:column;gap:22px">
+<div id="a-kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px"></div>
+<section style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:22px;display:flex;flex-direction:column;gap:12px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:30px;letter-spacing:2px">VISITAS · ÚLTIMOS 14 DÍAS</h2><div id="a-graf" style="display:flex;align-items:flex-end;gap:6px;height:200px;border-bottom:1px solid #3A4A40"></div><div id="a-pags" style="display:flex;flex-wrap:wrap;gap:8px"></div><span style="font-size:15px;color:#B8B8B8">"Visitas" cuenta cada página que se abre; "personas" cuenta una vez por cada visita a la web (aprox.). Sin cookies.</span></section>
+<section style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:22px;display:flex;flex-direction:column;gap:10px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:30px;letter-spacing:2px">USUARIOS</h2><div style="overflow-x:auto"><table id="a-users" style="width:100%;border-collapse:collapse;font-size:18px"></table></div></section>
+<section style="border:1px solid #2E3631;background:#121614;box-shadow:0 12px 32px rgba(0,0,0,.45);padding:22px;display:flex;flex-direction:column;gap:10px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:30px;letter-spacing:2px">PARTIDOS</h2><div style="overflow-x:auto"><table id="a-parts" style="width:100%;border-collapse:collapse;font-size:18px"></table></div></section>
+</div>
+</main>
+<footer style="background:#0A0A0A;border-top:3px solid #3DDC5A">
+<div style="max-width:1200px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:#B8B8B8;font-size:16px"><span>Falta Gente · Fútbol 5 y fútbol 7 en todo Uruguay</span><span>¿Tenés una cancha? <a href="#">Sumala</a></span></div>
+</footer>
+</div>
+<script id="fg-mobile-js">
+document.addEventListener('click',function(e){
+ var b=e.target.closest('.fg-burger');if(b){var h=b.closest('.fg-hdr');var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o);return;}
+ var t=e.target.closest('.fg-toggle');if(t){var c=t.closest('.fg-card');var o2=c.classList.toggle('open');t.setAttribute('aria-expanded',o2);t.querySelector('.fg-label').textContent=o2?'OCULTAR DETALLE':'VER DETALLE';return;}
+ var f=e.target.closest('.fg-filter-btn');if(f){var o3=document.querySelector('.fg-filters').classList.toggle('open');f.setAttribute('aria-expanded',o3);}
+});
+</script>
+<script type="module" id="fg-auth-js">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const cfg = { apiKey: "AIzaSyA9YJEk1XIsZibppMATtIDeAwRa6-8ab5w", authDomain: "faltagente.firebaseapp.com", projectId: "faltagente", storageBucket: "faltagente.firebasestorage.app", messagingSenderId: "540133272356", appId: "1:540133272356:web:4345443a9be6174b6ae1b1" };
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+const box = document.querySelector('.fg-auth'); const original = box ? box.innerHTML : '';
+const esc = (t) => String(t || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pintar = (u, p) => {
+  if (!box) return;
+  if (!u) { box.innerHTML = original; return; }
+  const alias = (p && p.alias) || (u.displayName || u.email || 'MI CUENTA').split(' ')[0].toUpperCase();
+  const foto = p && p.foto ? `<span style="width:36px;height:45px;flex:none;border:2px solid #3DDC5A;background:#2E3631 url('${p.foto}') center/cover"></span>`
+    : `<span style="width:36px;height:36px;flex:none;border-radius:50%;background:#3DDC5A;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:18px">${esc(alias[0])}</span>`;
+  box.innerHTML = `<a href="registro.html" title="Mi perfil" style="min-height:48px;display:flex;align-items:center;gap:10px;padding:0 12px 0 4px;border:2px solid #3A4A40;color:#fff;text-decoration:none">${foto}<span style="display:flex;flex-direction:column;line-height:1.05"><span style="font-size:12px;letter-spacing:1px;color:#3DDC5A;font-weight:700">CONECTADO</span><span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:1px">${esc(alias)}</span></span></a>`
+    + `<button type="button" class="fg-salir" style="min-height:48px;padding:0 14px;background:none;border:0;color:#B8B8B8;font-family:inherit;font-size:16px;text-decoration:underline;cursor:pointer">Salir</button>`;
+  box.querySelector('.fg-salir').onclick = () => signOut(auth);
+};
+let usuario = null;
+const cargar = async () => { let p = null; if (usuario) { try { const s = await getDoc(doc(db, 'jugadores', usuario.uid)); p = s.exists() ? s.data() : null; } catch (e) {} } pintar(usuario, p); };
+onAuthStateChanged(auth, (u) => { usuario = u; cargar(); });
+window.addEventListener('fg-perfil', cargar);
+</script>
+<script type="module">
+import { auth, db, esc } from "./fg.js";
+import { collection, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const ADMIN = 'tzXrEdGyIdWtVk78YpP9PxmImzU2';
+const $ = (i) => document.getElementById(i);
+const kpi = (v, l, c = '#fff') => `<div style="border:1px solid #2E3631;background:#0A0A0A;padding:16px;display:flex;flex-direction:column;gap:2px"><span style="font-family:Anton,sans-serif;font-size:48px;line-height:1;color:${c}">${v}</span><span style="font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">${l}</span></div>`;
+const th = (cols) => '<tr>' + cols.map((c) => `<th style="text-align:left;padding:8px;border-bottom:2px solid #3A4A40;font-size:14px;letter-spacing:2px;color:#B8B8B8">${c}</th>`).join('') + '</tr>';
+const td = (cells) => '<tr>' + cells.map((c) => `<td style="padding:8px;border-bottom:1px solid #2E3631;vertical-align:middle">${c}</td>`).join('') + '</tr>';
+const fmt = (d) => d ? d.toLocaleDateString('es-UY', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('es-UY', { hour: '2-digit', minute: '2-digit' }) : '—';
+const dias = [...Array(14)].map((_, i) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montevideo' }).format(new Date(Date.now() - (13 - i) * 864e5)));
+auth.onAuthStateChanged(async (u) => {
+  if (!u) { $('a-estado').innerHTML = 'Para ver el panel, <a href="registro.html?volver=admin.html" style="color:#3DDC5A">ingresá</a> con tu cuenta.'; return; }
+  if (u.uid !== ADMIN) { $('a-estado').textContent = 'Este panel es solo para el administrador.'; return; }
+  try {
+    const [js, ps, ss] = await Promise.all([getDocs(collection(db, 'jugadores')), getDocs(collection(db, 'partidos')), getDocs(collection(db, 'stats'))]);
+    const st = {}; ss.forEach((d) => { st[d.id] = d.data().n || 0; });
+    const hoy = dias[13], semana = dias.slice(7);
+    const visDia = (d) => Object.entries(st).filter(([k]) => k.startsWith(d + '_') && !k.endsWith('_sesiones')).reduce((a, [, v]) => a + v, 0);
+    const users = js.docs.map((d) => ({ id: d.id, ...d.data() })).sort((a, b) => ((b.creado || b.actualizado)?.toMillis?.() || 0) - ((a.creado || a.actualizado)?.toMillis?.() || 0));
+    const hace7 = Date.now() - 7 * 864e5;
+    const nuevos = users.filter((x) => ((x.creado || x.actualizado)?.toMillis?.() || 0) > hace7).length;
+    const reales = ps.docs.filter((d) => !d.id.startsWith('ej-'));
+    const anotados = ps.docs.reduce((a, d) => a + Object.keys(d.data().jugadores || {}).length, 0);
+    $('a-kpis').innerHTML = kpi(users.length, 'USUARIOS', '#3DDC5A') + kpi(nuevos, 'NUEVOS ESTA SEMANA') + kpi(visDia(hoy), 'VISITAS HOY', '#7CC4FF') + kpi(semana.reduce((a, d) => a + visDia(d), 0), 'VISITAS 7 DÍAS') + kpi(st[hoy + '_sesiones'] || 0, 'PERSONAS HOY') + kpi(reales.length, 'PARTIDOS CREADOS') + kpi(anotados, 'ANOTADOS EN TOTAL');
+    const vals = dias.map(visDia), max = Math.max(1, ...vals);
+    $('a-graf').innerHTML = dias.map((d, i) => `<div title="${d}: ${vals[i]} visitas" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%"><span style="font-weight:700;font-size:14px">${vals[i] || ''}</span><div style="width:100%;height:${Math.round(vals[i] / max * 160)}px;min-height:2px;background:${i === 13 ? '#7CC4FF' : '#3DDC5A'}"></div><span style="font-size:12px;color:#B8B8B8">${d.slice(8)}/${d.slice(5, 7)}</span></div>`).join('');
+    const porPag = {}; Object.entries(st).forEach(([k, v]) => { const [d, p] = k.split('_'); if (semana.includes(d) && p !== 'sesiones') porPag[p] = (porPag[p] || 0) + v; });
+    $('a-pags').innerHTML = Object.entries(porPag).sort((a, b) => b[1] - a[1]).map(([p, v]) => `<span style="border:1px solid #3A4A40;padding:4px 10px;font-weight:700">${esc(p)} · ${v}</span>`).join('') || '<span style="color:#B8B8B8">Todavía no hay visitas registradas.</span>';
+    $('a-users').innerHTML = th(['', 'ALIAS', 'EDAD', 'DEPARTAMENTO', 'RECOMENDADO POR', 'ALTA']) + users.map((x) => td([x.foto ? `<span style="display:inline-block;width:36px;height:45px;background:#2E3631 url('${x.foto}') center/cover;border:1px solid #3A4A40"></span>` : '', `<strong>${esc(x.alias)}</strong>`, esc(x.edad), esc(x.departamento), esc(x.recomendadoPor || '—'), fmt((x.creado || x.actualizado)?.toDate?.())])).join('');
+    $('a-parts').innerHTML = th(['PARTIDO', 'CUÁNDO', 'ORGANIZA', 'ANOTADOS', '']) + ps.docs.map((d) => { const x = d.data(), n = Object.keys(x.jugadores || {}).length; const ej = d.id.startsWith('ej-');
+      return td([ej ? `${esc(d.id.slice(3))} <span style="color:#B8B8B8">(ejemplo)</span>` : `${esc(x.cancha)} · ${esc(x.estilo)}`, ej ? '—' : `${esc(x.dia)} ${esc(x.fecha)} ${esc(x.hora)}`, ej ? '—' : esc(x.orgAlias), ej ? `${n} de ${x.libres} libres` : `${n} de ${x.cupo}`, `<a href="${ej ? 'partido-' + d.id.slice(3) + '.html' : 'partido.html?id=' + d.id}" style="color:#3DDC5A">Ver</a>`]); }).join('');
+    $('a-estado').hidden = true; $('a-cont').hidden = false;
+  } catch (e) { $('a-estado').textContent = 'No se pudo cargar el panel: ' + e.message; }
+});
+</script>
+</body>
+</html>

@@ -246,5 +246,15 @@ btn.addEventListener('click', accion);
 auth.onAuthStateChanged((u) => { user = u; pintar(); });
 onSnapshot(ref, (s) => { data = s.exists() ? s.data() : { jugadores: {} }; pintar(); }, (e) => console.warn(e));
 </script>
+<script type="module" id="fg-stats-js">
+// Contador anónimo de visitas: sin cookies ni datos personales, solo suma 1 por día y página
+import { db } from "./fg.js";
+import { doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+try {
+  const dia = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Montevideo' }).format(new Date());
+  setDoc(doc(db, 'stats', dia + '_ituzaingo'), { n: increment(1) }, { merge: true }).catch(() => {});
+  if (!sessionStorage.getItem('fg-s')) { sessionStorage.setItem('fg-s', '1'); setDoc(doc(db, 'stats', dia + '_sesiones'), { n: increment(1) }, { merge: true }).catch(() => {}); }
+} catch (e) {}
+</script>
 </body>
 </html>
