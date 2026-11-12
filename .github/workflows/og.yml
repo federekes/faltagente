@@ -1,0 +1,26 @@
+name: Vistas previas de partidos
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: og
+jobs:
+  og:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pillow
+      - run: |
+          curl -sSL -o scripts/Anton-Regular.ttf https://github.com/google/fonts/raw/main/ofl/anton/Anton-Regular.ttf
+          curl -sSL -o scripts/BarlowCondensed-SemiBold.ttf https://github.com/google/fonts/raw/main/ofl/barlowcondensed/BarlowCondensed-SemiBold.ttf
+      - run: python scripts/og_partidos.py
+      - run: |
+          rm -f scripts/*.ttf
+          git config user.name "falta-gente-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A p
+          git diff --cached --quiet || (git commit -m "Vistas previas de partidos" && git push)

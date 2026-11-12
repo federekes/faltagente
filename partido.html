@@ -93,7 +93,7 @@ aside[style*="position:sticky"]{top:100px!important}
 <p id="p-msg" role="status" style="margin:0;font-weight:700;font-size:18px;color:#FFB020"></p>
 <span style="font-weight:700;font-size:19px">Si no se arma el partido, se reintegra el importe.</span>
 <span style="font-size:17px;color:#B8B8B8">Por ahora el pago se arregla con el organizador. Muy pronto vas a poder pagar acá.</span>
-<a id="p-wa" target="_blank" rel="noopener" style="min-height:60px;display:flex;align-items:center;justify-content:center;gap:10px;border:2px solid #fff;font-family:Anton,sans-serif;font-size:22px;letter-spacing:2px;text-decoration:none">COMPARTIR POR WHATSAPP</a>
+<button id="p-share" type="button" style="min-height:60px;display:flex;align-items:center;justify-content:center;gap:10px;background:none;color:#fff;border:2px solid #fff;font-family:Anton,sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer">COMPARTIR</button>
 </aside>
 </div>
 </main>
@@ -102,14 +102,15 @@ aside[style*="position:sticky"]{top:100px!important}
 </footer>
 </div>
 <script id="fg-mobile-js">
+function fgToast(m){var t=document.getElementById('fg-toast');if(!t){t=document.createElement('div');t.id='fg-toast';t.setAttribute('role','status');t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#3DDC5A;color:#0A0A0A;font-weight:700;font-size:18px;padding:12px 20px;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.5)';document.body.appendChild(t);}t.textContent=m;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(function(){t.hidden=true;},3500);}
+function fgShareUrl(url,txt){if(navigator.share&&/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)){navigator.share({title:'Falta Gente',text:txt,url:url}).catch(function(){});return;}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){fgToast('Link copiado. Pegalo en WhatsApp');},function(){fgToast(url);});}else{fgToast(url);}}
 function fgShare(){var url=location.href.split('#')[0];var v=document.getElementById('ver-partido');if(v&&/id=/.test(v.getAttribute('href')))url=new URL(v.getAttribute('href'),location.href).href;
  var falta='';document.querySelectorAll('span').forEach(function(x){if(!falta&&/^(FALTAN \d+|¡FALTA 1!)$/.test(x.textContent.trim()))falta=x.textContent.trim();});
- var t=document.title.replace(' · Falta Gente','');var txt='Falta gente: '+t+(falta?' · '+falta:'')+'. ¡Anotate!';
- if(navigator.share){navigator.share({title:'Falta Gente',text:txt,url:url}).catch(function(){});}else{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank','noopener');}}
+ var t=document.title.replace(' · Falta Gente','');var txt='Falta gente: '+t+(falta?' · '+falta:'')+'. ¡Anotate!';fgShareUrl(url,txt);}
 document.addEventListener('click',function(e){
  var b=e.target.closest('.fg-burger');if(b){var h=b.closest('.fg-hdr');var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o);return;}
  var t=e.target.closest('.fg-toggle');if(t){var c=t.closest('.fg-card');var o2=c.classList.toggle('open');t.setAttribute('aria-expanded',o2);t.querySelector('.fg-label').textContent=o2?'OCULTAR DETALLE':'VER DETALLE';return;}
- var sh=e.target.closest('button');if(sh&&/COMPARTIR PARTIDO/.test(sh.textContent)){fgShare();return;}
+ var sh=e.target.closest('button');if(sh&&/COMPARTIR/.test(sh.textContent)){fgShare();return;}
  var f=e.target.closest('.fg-filter-btn');if(f){var o3=document.querySelector('.fg-filters').classList.toggle('open');f.setAttribute('aria-expanded',o3);}
 });
 </script>
@@ -204,8 +205,7 @@ const pintar = async () => {
     if (!yo) { accion(); $('p-accion').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     const inp = $('p-amigo-nombre'); if (inp) { inp.scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => inp.focus(), 400); }
   });
-  const url = location.href, txt = `Falta gente en ${P.cancha} · ${P.dia} ${P.fecha} ${P.hora} · ${$('p-falta').textContent} ¡Anotate! ${url}`;
-  $('p-wa').href = 'https://wa.me/?text=' + encodeURIComponent(txt);
+  $('p-share').onclick = () => { const url = new URL('p/' + id + '.html', location.href).href; window.fgShareUrl(url, `Falta gente en ${P.cancha} · ${P.dia} ${P.fecha} ${P.hora} · ${$('p-falta').textContent} ¡Anotate!`); };
   $('p-estado').hidden = true; $('p-cont').hidden = false;
 };
 const accion = async () => {
