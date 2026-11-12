@@ -122,11 +122,35 @@ document.addEventListener('click',function(e){
  var f=e.target.closest('.fg-filter-btn');if(f){var o3=document.querySelector('.fg-filters').classList.toggle('open');f.setAttribute('aria-expanded',o3);}
 });
 </script>
+<script type="module" id="fg-auth-js">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const cfg = { apiKey: "AIzaSyA9YJEk1XIsZibppMATtIDeAwRa6-8ab5w", authDomain: "faltagente.firebaseapp.com", projectId: "faltagente", storageBucket: "faltagente.firebasestorage.app", messagingSenderId: "540133272356", appId: "1:540133272356:web:4345443a9be6174b6ae1b1" };
+const app = getApps().length ? getApp() : initializeApp(cfg);
+const auth = getAuth(app), db = getFirestore(app);
+const box = document.querySelector('.fg-auth'); const original = box ? box.innerHTML : '';
+const esc = (t) => String(t || '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pintar = (u, p) => {
+  if (!box) return;
+  if (!u) { box.innerHTML = original; return; }
+  const alias = (p && p.alias) || (u.displayName || u.email || 'MI CUENTA').split(' ')[0].toUpperCase();
+  const foto = p && p.foto ? `<span style="width:36px;height:45px;flex:none;border:2px solid #3DDC5A;background:#2E3631 url('${p.foto}') center/cover"></span>`
+    : `<span style="width:36px;height:36px;flex:none;border-radius:50%;background:#3DDC5A;color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:18px">${esc(alias[0])}</span>`;
+  box.innerHTML = `<a href="registro.html" title="Mi perfil" style="min-height:48px;display:flex;align-items:center;gap:10px;padding:0 12px 0 4px;border:2px solid #3A4A40;color:#fff;text-decoration:none">${foto}<span style="display:flex;flex-direction:column;line-height:1.05"><span style="font-size:12px;letter-spacing:1px;color:#3DDC5A;font-weight:700">CONECTADO</span><span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:1px">${esc(alias)}</span></span></a>`
+    + `<button type="button" class="fg-salir" style="min-height:48px;padding:0 14px;background:none;border:0;color:#B8B8B8;font-family:inherit;font-size:16px;text-decoration:underline;cursor:pointer">Salir</button>`;
+  box.querySelector('.fg-salir').onclick = () => signOut(auth);
+};
+let usuario = null;
+const cargar = async () => { let p = null; if (usuario) { try { const s = await getDoc(doc(db, 'jugadores', usuario.uid)); p = s.exists() ? s.data() : null; } catch (e) {} } pintar(usuario, p); };
+onAuthStateChanged(auth, (u) => { usuario = u; cargar(); });
+window.addEventListener('fg-perfil', cargar);
+</script>
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const app = initializeApp({
+const app = getApps().length ? getApp() : initializeApp({
   apiKey: "AIzaSyA9YJEk1XIsZibppMATtIDeAwRa6-8ab5w",
   authDomain: "faltagente.firebaseapp.com",
   projectId: "faltagente",
@@ -180,7 +204,7 @@ $('f-perfil').onsubmit = async (ev) => { ev.preventDefault(); const e = $('e-per
   $('b-guardar').disabled = true; $('b-guardar').textContent = 'GUARDANDO…';
   try { await setDoc(doc(db, 'jugadores', u.uid), p, { merge: true });
     await setDoc(doc(db, 'jugadores', u.uid, 'privado', 'contacto'), { email: u.email || '', telefono: $('i-tel').value.trim(), aceptoPrivacidad: true, fecha: serverTimestamp() }, { merge: true });
-    perfil = p; listo(p); } catch (err) { e.textContent = msg(err); e.hidden = false; }
+    perfil = p; listo(p); window.dispatchEvent(new Event('fg-perfil')); } catch (err) { e.textContent = msg(err); e.hidden = false; }
   $('b-guardar').disabled = false; $('b-guardar').textContent = 'GUARDAR PERFIL'; };
 onAuthStateChanged(auth, async (u) => {
   if (!u) { perfil = null; show('v-login'); return; }
