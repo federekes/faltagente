@@ -136,6 +136,7 @@ a{color:#fff}a:hover{color:#3DDC5A}
   function tick(){
     document.querySelectorAll('[data-cd-short]').forEach(function(el){var p=parts(el.getAttribute('data-cd-short'));
       el.textContent=p.ms===0?'¡Ya empezó!':p.d+' d '+pad(p.h)+' h '+pad(p.m)+' min';});
+    document.querySelectorAll('[data-cdp]').forEach(function(el){var p=parts(el.getAttribute('data-iso'));el.textContent=pad(p[el.getAttribute('data-cdp')]);});
     var iso=document.body.getAttribute('data-match');
     if(iso){var p=parts(iso);document.querySelectorAll('[data-cd-part]').forEach(function(el){var k=el.getAttribute('data-cd-part');el.textContent=k==='d'?String(p.d):pad(p[k]);});}
   }
