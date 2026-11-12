@@ -63,13 +63,13 @@ def main():
         if p.get('ejemplo'): continue
         falta = max(0, cupo - n)
         vivos.add(pid)
-        firma = hashlib.md5(json.dumps([p.get('estilo'), p.get('dia'), p.get('fecha'), p.get('hora'), p.get('cancha'), p.get('direccion'), p.get('precio'), falta], ensure_ascii=False).encode()).hexdigest()[:8]
+        firma = hashlib.md5(json.dumps(['v2', p.get('estilo'), p.get('dia'), p.get('fecha'), p.get('hora'), p.get('cancha'), p.get('direccion'), p.get('precio'), falta], ensure_ascii=False).encode()).hexdigest()[:8]
         jpg, page = f'p/{pid}.jpg', f'p/{pid}.html'
         old = open(page).read() if os.path.exists(page) else ''
         if f'v={firma}' in old: continue
         imagen(p, falta, jpg)
         falta_txt = '¡Completo!' if falta <= 0 else ('¡Falta 1!' if falta == 1 else f'Faltan {falta}')
-        t = html.escape(f"{falta_txt} {p.get('estilo','')} en {p.get('cancha','')}")
+        t = html.escape(f"{(p.get('estilo') or 'Partido').capitalize()} en {p.get('cancha','')} · {falta_txt}")
         desc = html.escape(f"{p.get('dia','').capitalize()} {p.get('fecha','')} a las {p.get('hora','')} · ${p.get('precio','')} por jugador. Entrá y anotate.")
         dest = f'../partido.html?id={pid}'
         open(page, 'w').write(f'''<!doctype html><html lang="es"><head><meta charset="utf-8"><title>{t} · Falta Gente</title>
