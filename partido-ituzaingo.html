@@ -26,12 +26,17 @@ a{color:#fff}a:hover{color:#3DDC5A}
 <style>*{box-sizing:border-box} html{scroll-behavior:smooth} [id]{scroll-margin-top:16px} button{font:inherit}</style>
 <style id="fg-mobile">
 .fg-burger,.fg-toggle,.fg-filter-btn{display:none}
+header{position:sticky;top:0;z-index:40;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+[id]{scroll-margin-top:100px}
+aside[style*="position:sticky"]{top:100px!important}
 @media (max-width:760px){
  .fg-hdr{flex-wrap:wrap!important;justify-content:space-between!important;gap:0!important;padding:10px 16px!important}
  .fg-hdr>a:first-child span{font-size:26px!important}
  .fg-hdr>a:first-child svg{width:34px;height:34px}
  .fg-burger{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:2px solid #3A4A40;color:#fff;cursor:pointer}
  .fg-nav,.fg-auth{display:none!important;width:100%}
+ header{max-height:100vh;overflow-y:auto}
+ [id]{scroll-margin-top:84px}
  .fg-hdr.open .fg-nav{display:flex!important;flex-direction:column!important;gap:0!important;margin-top:10px}
  .fg-hdr.open .fg-auth{display:flex!important;padding:12px 0 6px;gap:10px!important}
  .fg-nav a{width:100%;min-height:54px!important;font-size:21px!important;border-bottom:1px solid #2A2A2A!important}
