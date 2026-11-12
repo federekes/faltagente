@@ -72,7 +72,7 @@ aside[style*="position:sticky"]{top:100px!important}
 <div style="display:flex;flex-direction:column;justify-content:center;padding:14px 20px"><span id="p-dia" style="font-family:Anton,sans-serif;font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:3px"></span><span id="p-fecha" style="font-family:Anton,sans-serif;font-size:clamp(50px,6vw,80px);line-height:1"></span></div>
 <div style="display:flex;flex-direction:column;justify-content:center;padding:14px 20px;border-left:1px solid #2E3631"><span style="font-weight:700;font-size:18px;letter-spacing:3px;color:#B8B8B8">HORA</span><span id="p-hora" style="font-family:Anton,sans-serif;font-size:clamp(50px,6vw,80px);line-height:1;color:#3DDC5A"></span></div></div>
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="letter-spacing:3px;font-size:15px;color:#B8B8B8;font-weight:700">EL PARTIDO EMPIEZA EN</span><div id="p-cd" style="transform:scale(1.5);transform-origin:top center;margin-bottom:26px"></div></div>
-<div style="font-size:21px;color:#D0D0D0">Organizado por <strong id="p-org" style="color:#7CC4FF"></strong></div>
+<div style="display:flex;align-items:center;justify-content:center;gap:12px;font-size:21px;color:#D0D0D0"><span id="p-orgfoto" hidden style="width:56px;height:70px;flex:none;box-sizing:border-box;border:2px solid #7CC4FF;background:#2E3631 center/cover no-repeat"></span><span>Organizado por <strong id="p-org" style="color:#7CC4FF"></strong></span></div>
 <div id="p-nota" style="width:100%;max-width:620px;background:#0A0A0A;border:1px solid #2E3631;padding:14px 18px;font-size:24px;font-style:italic"></div>
 </section>
 <section id="p-sol" hidden style="width:100%;max-width:1100px;align-self:center;border:2px solid #7CC4FF;background:#121614;padding:24px;display:flex;flex-direction:column;gap:12px">
@@ -168,6 +168,7 @@ const pintar = async () => {
   $('p-mapa').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(P.cancha + ', ' + P.direccion);
   if (!$('p-cd').firstChild) { $('p-cd').innerHTML = lcd(esc(P.fechaISO)); tickLCD(); }
   $('p-dia').textContent = P.dia; $('p-fecha').textContent = P.fecha; $('p-hora').textContent = P.hora; $('p-org').textContent = P.orgAlias;
+  if (P.orgUid && !window.fgOrgF) { window.fgOrgF = 1; getDoc(doc(db, 'jugadores', P.orgUid)).then((s) => { const f = s.exists() && s.data().foto; if (f) { const e = $('p-orgfoto'); e.style.backgroundImage = `url('${f}')`; e.hidden = false; } }).catch(() => {}); }
   $('p-nota').hidden = !P.nota; $('p-nota').textContent = P.nota ? '“' + P.nota + '”' : '';
   $('p-seg').style.gridTemplateColumns = `repeat(${P.cupo},minmax(0,1fr))`;
   $('p-seg').innerHTML = Array.from({ length: P.cupo }, (_, i) => i < n ? `<span style="height:30px;background:#3DDC5A;color:#0A0A0A;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i + 1}</span>` : `<span style="height:30px;border:2px dashed #8A8A8A;color:#B8B8B8;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">${i + 1}</span>`).join('');
