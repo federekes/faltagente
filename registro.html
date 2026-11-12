@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registrarme · Falta Gente</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box} body{margin:0} button,input,select{font:inherit} a{color:#fff} [hidden]{display:none!important}
+.err{color:#FF8A80;font-weight:700;font-size:17px} .ok{color:#3DDC5A;font-weight:700}
+</style>
+<style id="fg-mobile">
+.fg-burger,.fg-toggle,.fg-filter-btn{display:none}
+@media (max-width:760px){
+ .fg-hdr{flex-wrap:wrap!important;justify-content:space-between!important;gap:0!important;padding:10px 16px!important}
+ .fg-hdr>a:first-child span{font-size:26px!important}
+ .fg-hdr>a:first-child svg{width:34px;height:34px}
+ .fg-burger{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:none;border:2px solid #3A4A40;color:#fff;cursor:pointer}
+ .fg-nav,.fg-auth{display:none!important;width:100%}
+ .fg-hdr.open .fg-nav{display:flex!important;flex-direction:column!important;gap:0!important;margin-top:10px}
+ .fg-hdr.open .fg-auth{display:flex!important;padding:12px 0 6px;gap:10px!important}
+ .fg-nav a{width:100%;min-height:54px!important;font-size:21px!important;border-bottom:1px solid #2A2A2A!important}
+ .fg-auth a{flex:1;justify-content:center;min-height:52px!important}
+ .fg-card:not(.open) .fg-more{display:none!important}
+ .fg-toggle{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-card.open .fg-toggle .fg-arrow{transform:rotate(180deg)}
+ .fg-filter-btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;background:none;border:2px solid #3A4A40;color:#fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer}
+ .fg-filters{display:none!important}
+ .fg-filters.open{display:flex!important;flex-direction:column;align-items:stretch!important;width:100%}
+ .fg-filters.open select{width:100%}
+ .fg-teams{grid-template-columns:1fr!important}
+ main,section{padding-left:14px!important;padding-right:14px!important}
+ .fg-card [style*="font-size:32px;line-height:1"]{white-space:nowrap}
+ [data-cd-part]+span{font-size:11px!important;letter-spacing:1px!important}
+ [style*="clamp(34px,3.6vw,46px)"]{font-size:26px!important;letter-spacing:1px!important}
+ [style*="clamp(56px,6vw,80px)"]{font-size:50px!important}
+}
+</style>
+</head>
+<body style="margin:0;background:#0F1C15">
+<div style="min-height:100vh;background:repeating-linear-gradient(90deg,#13231A 0 64px,#0F1C15 64px 128px);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:18px;display:flex;flex-direction:column">
+<header style="background:#0A0A0A;border-bottom:3px solid #3DDC5A">
+<div class="fg-hdr" style="max-width:1200px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px">
+<a href="#" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff"><svg width="40" height="40" viewBox="0 0 36 36" aria-hidden="true" style="flex:none"><circle cx="18" cy="18" r="16" fill="#fff"/><polygon points="18,11 24,15.5 22,22.5 14,22.5 12,15.5" fill="#0A0A0A"/><path d="M18 11V3M24 15.5L32 12M22 22.5L27 29M14 22.5L9 29M12 15.5L4 12" stroke="#0A0A0A" stroke-width="2" fill="none"/></svg><span style="font-family:Anton,sans-serif;font-size:30px;font-style:italic;letter-spacing:1px;color:#3DDC5A">FALTA GENTE</span></a><button class="fg-burger" type="button" aria-label="Abrir menú" aria-expanded="false"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="fg-nav" aria-label="Principal" style="display:flex;flex-wrap:wrap;gap:4px 24px;flex:1 1 auto">
+<a href="index.html#partidos" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">JUGAR PARTIDO</a>
+<a href="crear.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CREAR PARTIDO</a>
+<a href="index.html#como" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">CÓMO FUNCIONA</a>
+<a href="registro.html" style="font-weight:700;font-size:18px;letter-spacing:1px;text-decoration:none;min-height:44px;display:flex;align-items:center;color:#D0D0D0">MI PERFIL</a>
+</nav>
+<div class="fg-auth" style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="registro.html" style="min-height:44px;padding:0 18px;display:flex;align-items:center;border:2px solid #fff;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">INGRESAR</a>
+<a href="registro.html#crear" style="min-height:44px;padding:0 18px;display:flex;align-items:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:16px;letter-spacing:1px;text-decoration:none">REGISTRARME</a>
+</div>
+</div>
+</header>
+<main style="flex:1;width:100%;max-width:1200px;margin:0 auto;padding:32px 24px 64px;display:flex;flex-direction:column;gap:24px">
+
+<section id="v-loading" style="width:100%;max-width:640px;align-self:center;border:1px solid #2E3631;background:#121614;box-shadow:0 16px 40px rgba(0,0,0,.5);padding:28px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center"><span style="font-family:Anton,sans-serif;font-size:28px;letter-spacing:2px">CARGANDO…</span></section>
+
+<section id="v-login" hidden style="width:100%;max-width:640px;align-self:center;border:1px solid #2E3631;background:#121614;box-shadow:0 16px 40px rgba(0,0,0,.5);padding:28px;display:flex;flex-direction:column;gap:16px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(40px,6vw,60px);line-height:1;color:#3DDC5A;text-align:center">ENTRÁ Y ANOTATE</h1>
+<p style="margin:0;text-align:center;font-size:20px;color:#E6E6E6">Creá tu cuenta en un minuto para anotarte a partidos o armar el tuyo.</p>
+<button id="b-google" type="button" style="min-height:60px;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#1F1F1F;border:0;font-size:21px;font-weight:700;cursor:pointer"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Continuar con Google</button>
+<div style="display:flex;align-items:center;gap:12px;color:#8A9A90;font-weight:700;letter-spacing:2px"><span style="flex:1;height:1px;background:#2E3631"></span>O CON TU MAIL<span style="flex:1;height:1px;background:#2E3631"></span></div>
+<form id="f-mail" style="display:flex;flex-direction:column;gap:12px" novalidate>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">MAIL<input id="i-mail" type="email" autocomplete="email" required style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">CONTRASEÑA<input id="i-pass" type="password" autocomplete="current-password" minlength="6" required style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<p id="e-login" class="err" role="alert" style="margin:0" hidden></p>
+<button id="b-mail" type="submit" style="min-height:60px;width:100%;border:0;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:24px;letter-spacing:2px;cursor:pointer">INGRESAR</button>
+</form>
+<p style="margin:0;text-align:center;font-size:18px;color:#D0D0D0"><span id="t-modo">¿Es tu primera vez?</span> <button id="b-modo" type="button" style="background:none;border:0;color:#3DDC5A;font-weight:700;font-size:18px;text-decoration:underline;cursor:pointer;min-height:44px">Crear cuenta con mail</button></p>
+<button id="b-olvide" type="button" style="align-self:center;background:none;border:0;color:#B8B8B8;font-size:16px;text-decoration:underline;cursor:pointer;min-height:44px">Me olvidé la contraseña</button>
+</section>
+
+<section id="v-perfil" hidden style="width:100%;max-width:640px;align-self:center;border:1px solid #2E3631;background:#121614;box-shadow:0 16px 40px rgba(0,0,0,.5);padding:28px;display:flex;flex-direction:column;gap:16px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(36px,5vw,52px);line-height:1;color:#3DDC5A;text-align:center">ARMÁ TU PERFIL</h1>
+<p style="margin:0;text-align:center;font-size:19px;color:#E6E6E6">Así te van a ver los demás jugadores.</p>
+<form id="f-perfil" style="display:flex;flex-direction:column;gap:14px" novalidate>
+<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+<div id="foto-prev" style="width:96px;height:120px;flex:none;border:2px dashed #8A8A8A;display:flex;align-items:center;justify-content:center;color:#B8B8B8;font-weight:700;letter-spacing:1px;background-size:cover;background-position:center">FOTO</div>
+<label style="min-height:52px;padding:0 18px;display:flex;align-items:center;border:2px solid #fff;font-family:Anton,sans-serif;font-size:18px;letter-spacing:1px;cursor:pointer">SUBIR FOTO<input id="i-foto" type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0"></label>
+<span style="font-size:16px;color:#B8B8B8;flex:1 1 160px">Mejor una tipo carné, de frente.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">ALIAS *<input id="i-alias" maxlength="20" required placeholder="Ej: EL TANO" style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit;text-transform:uppercase"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">NOMBRE<input id="i-nombre" maxlength="40" autocomplete="name" style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">EDAD *<input id="i-edad" type="number" min="14" max="90" required style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">DEPARTAMENTO *<select id="i-depto" required style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"><option value="">Elegí…</option><option>Artigas</option><option>Canelones</option><option>Cerro Largo</option><option>Colonia</option><option>Durazno</option><option>Flores</option><option>Florida</option><option>Lavalleja</option><option>Maldonado</option><option>Montevideo</option><option>Paysandú</option><option>Río Negro</option><option>Rivera</option><option>Rocha</option><option>Salto</option><option>San José</option><option>Soriano</option><option>Tacuarembó</option><option>Treinta y Tres</option></select></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">TU RESEÑA (CÓMO JUGÁS)<input id="i-resena" maxlength="40" placeholder="Ej: Defensa rústico, Goleador nato…" style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">RECOMENDADO POR (OPCIONAL)<input id="i-reco" maxlength="20" placeholder="Alias de quien te invitó" style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px;letter-spacing:2px;color:#B8B8B8">TELÉFONO (OPCIONAL · PRIVADO)<input id="i-tel" type="tel" autocomplete="tel" maxlength="20" placeholder="09X XXX XXX" style="min-height:52px;width:100%;background:#0A0A0A;border:2px solid #3A4A40;color:#fff;font-size:20px;padding:0 14px;font-family:inherit"></label>
+<span style="font-size:16px;color:#B8B8B8;margin-top:-6px">Tu mail y tu teléfono no los ve nadie. Solo los usamos para avisarte de tus partidos.</span>
+<label style="display:flex;align-items:flex-start;gap:12px;font-size:18px;color:#E6E6E6;cursor:pointer"><input id="i-acepto" type="checkbox" required style="width:26px;height:26px;flex:none;accent-color:#3DDC5A;margin-top:2px">Acepto la <a href="privacidad.html" target="_blank" style="color:#3DDC5A">política de privacidad</a> y las reglas de Falta Gente.</label>
+<p id="e-perfil" class="err" role="alert" style="margin:0" hidden></p>
+<button id="b-guardar" type="submit" style="min-height:60px;width:100%;border:0;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:24px;letter-spacing:2px;cursor:pointer">GUARDAR PERFIL</button>
+</form>
+<button id="b-salir1" type="button" style="align-self:center;background:none;border:0;color:#B8B8B8;font-size:16px;text-decoration:underline;cursor:pointer;min-height:44px">Salir de esta cuenta</button>
+</section>
+
+<section id="v-listo" hidden style="width:100%;max-width:640px;align-self:center;border:1px solid #2E3631;background:#121614;box-shadow:0 16px 40px rgba(0,0,0,.5);padding:28px;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center">
+<div id="l-foto" style="width:120px;height:150px;border:3px solid #3DDC5A;background:#2E3631 center/cover"></div>
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(40px,6vw,60px);line-height:1;color:#3DDC5A">¡HOLA <span id="l-alias"></span>!</h1>
+<p id="l-datos" style="margin:0;font-size:20px;color:#E6E6E6"></p>
+<p id="l-resena" style="margin:0;font-size:22px;font-style:italic"></p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;width:100%">
+<a href="index.html#partidos" style="min-height:60px;display:flex;align-items:center;justify-content:center;background:#3DDC5A;color:#0A0A0A;font-family:Anton,sans-serif;font-size:22px;letter-spacing:2px;text-decoration:none">VER PARTIDOS</a>
+<a href="crear.html" style="min-height:60px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;font-family:Anton,sans-serif;font-size:22px;letter-spacing:2px;text-decoration:none">ARMAR UN PARTIDO</a>
+</div>
+<div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center"><button id="b-editar" type="button" style="background:none;border:0;color:#fff;font-size:18px;text-decoration:underline;cursor:pointer;min-height:44px">Editar mi perfil</button><button id="b-salir2" type="button" style="background:none;border:0;color:#B8B8B8;font-size:18px;text-decoration:underline;cursor:pointer;min-height:44px">Cerrar sesión</button></div>
+</section>
+</main>
+<footer style="background:#0A0A0A;border-top:3px solid #3DDC5A">
+<div style="max-width:1200px;margin:0 auto;padding:20px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:#B8B8B8;font-size:16px"><span>Falta Gente · Fútbol 5 y fútbol 7 en todo Uruguay</span><span>¿Tenés una cancha? <a href="#">Sumala</a></span></div>
+</footer>
+</div>
+<script id="fg-mobile-js">
+document.addEventListener('click',function(e){
+ var b=e.target.closest('.fg-burger');if(b){var h=b.closest('.fg-hdr');var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o);return;}
+ var t=e.target.closest('.fg-toggle');if(t){var c=t.closest('.fg-card');var o2=c.classList.toggle('open');t.setAttribute('aria-expanded',o2);t.querySelector('.fg-label').textContent=o2?'OCULTAR DETALLE':'VER DETALLE';return;}
+ var f=e.target.closest('.fg-filter-btn');if(f){var o3=document.querySelector('.fg-filters').classList.toggle('open');f.setAttribute('aria-expanded',o3);}
+});
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+const app = initializeApp({
+  apiKey: "AIzaSyA9YJEk1XIsZibppMATtIDeAwRa6-8ab5w",
+  authDomain: "faltagente.firebaseapp.com",
+  projectId: "faltagente",
+  storageBucket: "faltagente.firebasestorage.app",
+  messagingSenderId: "540133272356",
+  appId: "1:540133272356:web:4345443a9be6174b6ae1b1"
+});
+const auth = getAuth(app); auth.languageCode = 'es';
+const db = getFirestore(app);
+const $ = (id) => document.getElementById(id);
+const views = ['v-loading','v-login','v-perfil','v-listo'];
+const show = (v) => views.forEach((x) => $(x).hidden = x !== v);
+const ERR = {
+  'auth/invalid-credential':'Mail o contraseña incorrectos.','auth/wrong-password':'Mail o contraseña incorrectos.','auth/user-not-found':'No hay ninguna cuenta con ese mail.',
+  'auth/email-already-in-use':'Ya hay una cuenta con ese mail. Probá ingresar.','auth/weak-password':'La contraseña tiene que tener al menos 6 caracteres.',
+  'auth/invalid-email':'Ese mail no parece válido.','auth/popup-closed-by-user':'Cerraste la ventana de Google antes de terminar.',
+  'auth/operation-not-allowed':'Este método de ingreso todavía no está activado.','auth/unauthorized-domain':'Esta página todavía no está autorizada en Firebase.',
+  'auth/too-many-requests':'Demasiados intentos. Esperá un rato y probá de nuevo.','auth/network-request-failed':'Sin conexión. Revisá internet.',
+  'permission-denied':'No se pudo guardar (permiso denegado). Revisá las reglas de la base de datos.'
+};
+const msg = (e) => ERR[e && e.code] || ('Algo salió mal: ' + ((e && e.message) || e));
+let crear = false, fotoData = '', perfil = null;
+const setModo = () => { $('b-mail').textContent = crear ? 'CREAR CUENTA' : 'INGRESAR'; $('t-modo').textContent = crear ? '¿Ya tenés cuenta?' : '¿Es tu primera vez?'; $('b-modo').textContent = crear ? 'Ingresar' : 'Crear cuenta con mail'; $('i-pass').autocomplete = crear ? 'new-password' : 'current-password'; };
+$('b-modo').onclick = () => { crear = !crear; setModo(); $('e-login').hidden = true; };
+const loginErr = (t) => { $('e-login').textContent = t; $('e-login').hidden = false; };
+$('b-google').onclick = async () => { try { await signInWithPopup(auth, new GoogleAuthProvider()); } catch (e) { loginErr(msg(e)); } };
+$('f-mail').onsubmit = async (ev) => { ev.preventDefault(); const m = $('i-mail').value.trim(), p = $('i-pass').value;
+  if (!m || p.length < 6) return loginErr('Poné tu mail y una contraseña de al menos 6 caracteres.');
+  try { crear ? await createUserWithEmailAndPassword(auth, m, p) : await signInWithEmailAndPassword(auth, m, p); } catch (e) { loginErr(msg(e)); } };
+$('b-olvide').onclick = async () => { const m = $('i-mail').value.trim(); if (!m) return loginErr('Escribí tu mail arriba y tocá de nuevo "Me olvidé la contraseña".');
+  try { await sendPasswordResetEmail(auth, m); $('e-login').className = 'ok'; loginErr('Te mandamos un mail para cambiar la contraseña.'); } catch (e) { $('e-login').className = 'err'; loginErr(msg(e)); } };
+[$('b-salir1'), $('b-salir2')].forEach((b) => b.onclick = () => signOut(auth));
+$('i-foto').onchange = () => { const f = $('i-foto').files[0]; if (!f) return; const img = new Image(); const url = URL.createObjectURL(f);
+  img.onload = () => { const W = 240, H = 300, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d');
+    const r = Math.max(W / img.width, H / img.height), w = img.width * r, h = img.height * r; x.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+    fotoData = c.toDataURL('image/jpeg', 0.72); $('foto-prev').style.backgroundImage = 'url(' + fotoData + ')'; $('foto-prev').textContent = ''; URL.revokeObjectURL(url); };
+  img.src = url; };
+const fill = (p) => { $('i-alias').value = p.alias || ''; $('i-nombre').value = p.nombre || ''; $('i-edad').value = p.edad || ''; $('i-depto').value = p.departamento || '';
+  $('i-resena').value = p.resena || ''; $('i-reco').value = p.recomendadoPor || ''; fotoData = p.foto || ''; if (fotoData) { $('foto-prev').style.backgroundImage = 'url(' + fotoData + ')'; $('foto-prev').textContent = ''; } $('i-acepto').checked = true; };
+const listo = (p) => { $('l-alias').textContent = p.alias; $('l-datos').textContent = p.edad + ' años · ' + p.departamento + (p.recomendadoPor ? ' · recomendado por ' + p.recomendadoPor : '');
+  $('l-resena').textContent = p.resena ? '“' + p.resena + '”' : ''; $('l-foto').style.backgroundImage = p.foto ? 'url(' + p.foto + ')' : ''; show('v-listo'); };
+$('b-editar').onclick = () => { fill(perfil || {}); show('v-perfil'); };
+$('f-perfil').onsubmit = async (ev) => { ev.preventDefault(); const e = $('e-perfil'); e.hidden = true;
+  const alias = $('i-alias').value.trim().toUpperCase(), edad = parseInt($('i-edad').value, 10), dep = $('i-depto').value;
+  if (!alias) { e.textContent = 'Poné un alias.'; e.hidden = false; return; }
+  if (!(edad >= 14 && edad <= 90)) { e.textContent = 'Poné tu edad (entre 14 y 90).'; e.hidden = false; return; }
+  if (!dep) { e.textContent = 'Elegí tu departamento.'; e.hidden = false; return; }
+  if (!$('i-acepto').checked) { e.textContent = 'Tenés que aceptar la política de privacidad.'; e.hidden = false; return; }
+  const u = auth.currentUser; const p = { alias, nombre: $('i-nombre').value.trim(), edad, departamento: dep, resena: $('i-resena').value.trim(),
+    recomendadoPor: $('i-reco').value.trim().toUpperCase(), foto: fotoData, partidosJugados: (perfil && perfil.partidosJugados) || 0, actualizado: serverTimestamp() };
+  $('b-guardar').disabled = true; $('b-guardar').textContent = 'GUARDANDO…';
+  try { await setDoc(doc(db, 'jugadores', u.uid), p, { merge: true });
+    await setDoc(doc(db, 'jugadores', u.uid, 'privado', 'contacto'), { email: u.email || '', telefono: $('i-tel').value.trim(), aceptoPrivacidad: true, fecha: serverTimestamp() }, { merge: true });
+    perfil = p; listo(p); } catch (err) { e.textContent = msg(err); e.hidden = false; }
+  $('b-guardar').disabled = false; $('b-guardar').textContent = 'GUARDAR PERFIL'; };
+onAuthStateChanged(auth, async (u) => {
+  if (!u) { perfil = null; show('v-login'); return; }
+  show('v-loading');
+  try { const s = await getDoc(doc(db, 'jugadores', u.uid)); perfil = s.exists() ? s.data() : null; } catch (e) { perfil = null; }
+  if (perfil && perfil.alias) listo(perfil); else { if (u.displayName) $('i-nombre').value = u.displayName; show('v-perfil'); }
+});
+if (location.hash === '#crear') { crear = true; setModo(); }
+</script>
+</body>
+</html>
