@@ -54,6 +54,21 @@ service cloud.firestore {
             && request.resource.data.jugadores.diff(resource.data.jugadores).removedKeys().hasOnly([request.auth.uid, request.auth.uid + '_inv1', request.auth.uid + '_inv2', request.auth.uid + '_inv3']))
       );
       allow delete: if request.auth != null && resource.data.get('orgUid', '') == request.auth.uid;
+
+      // Foro del partido: lo lee cualquiera; escriben solo los anotados y el organizador; cada uno borra lo suyo (el organizador, cualquiera)
+      match /mensajes/{mid} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.resource.data.keys().hasOnly(['uid', 'alias', 'texto', 't'])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.texto is string && request.resource.data.texto.size() > 0 && request.resource.data.texto.size() <= 280
+          && request.resource.data.alias is string && request.resource.data.alias.size() <= 30
+          && request.resource.data.t == request.time
+          && (request.auth.uid in get(/databases/$(database)/documents/partidos/$(pid)).data.jugadores
+              || get(/databases/$(database)/documents/partidos/$(pid)).data.get('orgUid', '') == request.auth.uid);
+        allow delete: if request.auth != null && (resource.data.uid == request.auth.uid
+          || get(/databases/$(database)/documents/partidos/$(pid)).data.get('orgUid', '') == request.auth.uid);
+      }
     }
   }
 }
