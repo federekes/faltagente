@@ -276,5 +276,21 @@ try {
   grid.insertAdjacentHTML('afterbegin', '<div style="grid-column:1/-1;border:2px solid #FFB020;padding:14px 18px;color:#FFB020;font-weight:700;font-size:18px">No pudimos cargar los partidos nuevos. Recargá la página; si sigue igual, probá desactivar el bloqueador de anuncios para este sitio.</div>'); }
 auth.onAuthStateChanged((u) => document.querySelectorAll('.fg-tuyo').forEach((el) => { el.hidden = !(u && el.dataset.org === u.uid); }));
 </script>
+<script type="module" id="fg-ejidx-js">
+import { db } from "./fg.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+for (const slug of ['ituzaingo', 'sportcenter', 'alasrojas']) {
+  try {
+    const s = await getDoc(doc(db, 'partidos', 'ej-' + slug)); if (!s.exists()) continue;
+    const extra = Object.keys(s.data().jugadores || {}).length; if (!extra) continue;
+    const a = document.querySelector(`#grid-partidos a[href="partido-${slug}.html"]`); const card = a && a.closest('article'); if (!card) continue;
+    const c = [...card.querySelectorAll('span')].find((x) => /^\d+ DE \d+ JUGADORES$/.test(x.textContent.trim())); if (!c) continue;
+    const base = parseInt(c.textContent, 10), cupo = parseInt(c.textContent.split(' DE ')[1], 10), n = base + extra, falta = Math.max(0, cupo - n);
+    c.textContent = `${n} DE ${cupo} JUGADORES`;
+    const f = c.nextElementSibling; if (f) f.textContent = falta === 0 ? '¡COMPLETO!' : falta === 1 ? '¡FALTA 1!' : 'FALTAN ' + falta;
+    const g = card.querySelector('div[style*="grid-template-columns:repeat("]'); if (g) [...g.children].forEach((x, i) => { if (i < n) { x.style.background = '#3DDC5A'; x.style.border = '0'; x.style.color = '#0A0A0A'; } });
+  } catch (e) {}
+}
+</script>
 </body>
 </html>
